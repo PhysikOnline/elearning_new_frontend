@@ -4,8 +4,10 @@ import IconMenu from "../static/IconMenu.js";
 
 function Toolbar(props) {
   return (
-    <div onClick={props.drawerClickHandler} className="Toolbar">
-      <IconMenu />
+    <div className="Toolbar">
+      <div onClick={props.drawerClickHandler}>
+        <IconMenu />
+      </div>
       <h1>PhysikOnline</h1>
     </div>
   );
