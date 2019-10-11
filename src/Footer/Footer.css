@@ -1,6 +1,6 @@
 .Footer {
   flex-shrink: 0;
-  background-color: #005eaa;
+  background-color: var(--poblue);
   display: flex;
   flex-direction: column;
   justify-content: center;
