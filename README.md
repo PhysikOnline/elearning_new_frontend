@@ -1,4 +1,18 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Requirements
+
+- node
+- npm
+- [backend](https://github.com/PhysikOnline/elearning_new_backend)
+
+# Start the project
+Install all dependencies with
+```
+npm install
+```
+and start the project then with
+```
+npm run start
+```
 
 ## Available Scripts
 
