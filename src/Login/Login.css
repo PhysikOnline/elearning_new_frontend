@@ -6,9 +6,75 @@
   top: 0;
   left: 0;
   z-index: 300;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.Login .IconClose {
+  position: fixed;
+  right: 5px;
+  top: 5px;
+  height: 50px;
+  width: 50px;
+}
+
+.Login .inputField {
+  font-size: 3vh;
+  border-bottom: 2px solid rgb(107, 107, 107);
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  width: 70%;
+  max-width: 500px;
+  margin: 3px;
+  padding-left: 2vw;
+  padding-right: 2vw;
+  padding-top: 1vh;
+  padding-bottom: 1vh;
+  background-color: white;
+}
+
+.Login .inputField:focus {
+  outline: none;
+  border-bottom: 2px solid rgb(0, 0, 0);
+  background-color: white;
+}
+
+.Login .submitButton {
+  margin-top: 2vh;
+  border-radius: 3vh;
+  border: 0px;
+  width: 60%;
+  max-width: 400px;
+  height: 6vh;
+  background-color: rgb(175, 175, 175);
+  transition: background-color 0.05s ease-in-out;
+  font-size: 2vh;
+}
+
+.Login .submitButton:focus {
+  outline: none;
+  background-color: rgb(175, 175, 175);
+}
+
+.Login .submitButton:active {
+  outline: none;
+  background-color: var(--poblue);
 }
 
 .Login form {
+  height: 80%;
+  width: 100%;
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.Login form div {
+  height: 18px;
+  font-size: 15px;
+  color: red;
+  padding: 0px;
 }

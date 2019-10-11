@@ -11,20 +11,46 @@ class App extends React.Component {
     super(props);
     this.state = {
       sideDrawerOpen: false,
-      loginOpen: false
+      loginOpen: false,
+      loggedIn: false
     };
+    this.updateLoginState = this.updateLoginState.bind(this);
+    this.loginToggleHandler = this.loginToggleHandler.bind(this);
+    this.backdropClickHandler = this.backdropClickHandler.bind(this);
+    this.sideDrawerToggleClickHandler = this.sideDrawerToggleClickHandler.bind(
+      this
+    );
   }
-  sideDrawerToggleClickHandler = () => {
+  sideDrawerToggleClickHandler() {
     this.setState(previousState => {
       return { sideDrawerOpen: !previousState.sideDrawerOpen };
     });
-  };
-  backdropClickHandler = () => {
+  }
+  backdropClickHandler() {
     this.setState({ sideDrawerOpen: false });
-  };
-  loginClickHandler = () => {
-    this.setState({ loginOpen: true });
-  };
+  }
+  loginToggleHandler() {
+    this.setState(previousState => {
+      return { loginOpen: !previousState.loginOpen };
+    });
+  }
+  updateLoginState() {
+    fetch("/user/checklogin", {
+      method: "GET"
+    })
+      .then(response => response.text())
+      .then(JSON.parse)
+      .then(userLoginResponse =>
+        this.setState(previousState => {
+          if (previousState.loggedIn !== userLoginResponse) {
+            return { loggedIn: userLoginResponse };
+          }
+        })
+      );
+  }
+  componentDidMount() {
+    this.updateLoginState();
+  }
   render() {
     let backdrop;
     let login;
@@ -34,7 +60,12 @@ class App extends React.Component {
     }
 
     if (this.state.loginOpen) {
-      login = <Login />;
+      login = (
+        <Login
+          updateLoginState={this.updateLoginState}
+          closeLogin={this.loginToggleHandler}
+        />
+      );
     }
 
     return (
@@ -46,9 +77,9 @@ class App extends React.Component {
         <p>
           Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
           nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
-          sed diam voluptua.
+          sed diam voluptua. {String(this.state.loggedIn)}
         </p>
-        <button onClick={this.loginClickHandler}>Login</button>
+        <button onClick={this.loginToggleHandler}>Login</button>
       </div>
     );
   }
