@@ -10,6 +10,10 @@ class Login extends React.Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.componentDidMount = this.componentDidMount.bind(this);
+    this.randomSubmitText = this.submitButtonText[
+      Math.floor(Math.random() * this.submitButtonText.length)
+    ];
   }
   submitButtonText = [
     "Los geht's",
@@ -82,11 +86,7 @@ class Login extends React.Component {
           <input
             className="submitButton"
             type="submit"
-            value={
-              this.submitButtonText[
-                Math.floor(Math.random() * this.submitButtonText.length)
-              ]
-            }
+            value={this.randomSubmitText}
           />
         </form>
       </div>
