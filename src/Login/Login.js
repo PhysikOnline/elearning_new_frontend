@@ -10,7 +10,6 @@ class Login extends React.Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.componentDidMount = this.componentDidMount.bind(this);
     this.randomSubmitText = this.submitButtonText[
       Math.floor(Math.random() * this.submitButtonText.length)
     ];
@@ -54,7 +53,6 @@ class Login extends React.Component {
       wrongLogin: false
     });
   };
-  componentDidMount() {}
   render() {
     return (
       <div className="Login">
