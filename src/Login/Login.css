@@ -12,6 +12,7 @@
 }
 
 .Login .IconClose {
+  cursor: pointer;
   position: fixed;
   right: 5px;
   top: 5px;
@@ -42,6 +43,7 @@
 }
 
 .Login .submitButton {
+  cursor: pointer;
   margin-top: 2vh;
   border-radius: 3vh;
   border: 0px;
