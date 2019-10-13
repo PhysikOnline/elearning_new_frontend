@@ -5,6 +5,9 @@ import Toolbar from "./Toolbar/Toolbar";
 import SideDrawer from "./SideDrawer/SideDrawer";
 import Backdrop from "./Backdrop/Backdrop";
 import Login from "./Login/Login";
+import { Route, Switch, BrowserRouter as Router } from "react-router-dom";
+import Impressum from "./impressum/impressum";
+import Datenschutz from "./datenschutz/datenschutz";
 
 class App extends React.Component {
   constructor(props) {
@@ -74,15 +77,39 @@ class App extends React.Component {
         <SideDrawer show={this.state.sideDrawerOpen} />
         {backdrop}
         {login}
-        <p>
-          Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
-          nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
-          sed diam voluptua.
-        </p>
+
+        <Router>
+          <div>
+            {/* A <Switch> looks through its children <Route>s and
+            renders the first one that matches the current URL. */}
+            <Switch>
+              <Route path="/impressum" component={Impressum}>
+                <Impressum />
+              </Route>
+              <Route path="/datenschutz" component={Datenschutz}>
+                <Datenschutz />
+              </Route>
+              <Route path="/">
+                <Home />
+              </Route>
+            </Switch>
+          </div>
+        </Router>
+
         <button onClick={this.loginToggleHandler}>Login</button>
       </div>
     );
   }
+}
+
+function Home() {
+  return (
+    <p>
+      Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
+      eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
+      voluptua.
+    </p>
+  );
 }
 
 export default App;
