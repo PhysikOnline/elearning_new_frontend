@@ -83,10 +83,10 @@ class App extends React.Component {
             {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
             <Switch>
-              <Route path="/impressum" component={Impressum}>
+              <Route path="/impressum">
                 <Impressum />
               </Route>
-              <Route path="/datenschutz" component={Datenschutz}>
+              <Route path="/datenschutz">
                 <Datenschutz />
               </Route>
               <Route path="/">
