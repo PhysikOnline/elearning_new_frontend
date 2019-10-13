@@ -77,7 +77,7 @@ class App extends React.Component {
         <p>
           Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
           nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
-          sed diam voluptua. {String(this.state.loggedIn)}
+          sed diam voluptua.
         </p>
         <button onClick={this.loginToggleHandler}>Login</button>
       </div>
