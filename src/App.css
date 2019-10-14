@@ -4,7 +4,7 @@
 
 @media (min-width: 1025px) {
   /* breite Browserfenster */
-  .App p {
+  .App .positioning {
     margin-top: 80px;
     padding-left: 10vw;
     padding-right: 10vw;
@@ -14,7 +14,7 @@
 }
 @media (max-width: 1024px) {
   /* mobile Geräte */
-  .App p {
+  .App .positioning {
     margin-top: 50px;
     padding-left: 10px;
     padding-right: 10px;
@@ -23,7 +23,7 @@
   }
 }
 
-.App p {
+.App .positioning {
   margin-left: 0;
   margin-right: 0;
   margin-bottom: 0;

@@ -8,6 +8,7 @@ import Login from "./Login/Login";
 import { Route, Switch, BrowserRouter as Router } from "react-router-dom";
 import Impressum from "./impressum/impressum";
 import Datenschutz from "./datenschutz/datenschutz";
+import CourseRouter from "./Course/CourseRouter";
 
 class App extends React.Component {
   constructor(props) {
@@ -77,26 +78,30 @@ class App extends React.Component {
         <SideDrawer show={this.state.sideDrawerOpen} />
         {backdrop}
         {login}
-
-        <Router>
-          <div>
-            {/* A <Switch> looks through its children <Route>s and
+        <div className="positioning">
+          <Router>
+            <div>
+              {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
-            <Switch>
-              <Route path="/impressum">
-                <Impressum />
-              </Route>
-              <Route path="/datenschutz">
-                <Datenschutz />
-              </Route>
-              <Route path="/">
-                <Home />
-              </Route>
-            </Switch>
-          </div>
-        </Router>
+              <Switch>
+                <Route path="/impressum">
+                  <Impressum />
+                </Route>
+                <Route path="/course">
+                  <CourseRouter />
+                </Route>
+                <Route path="/datenschutz">
+                  <Datenschutz />
+                </Route>
+                <Route path="/">
+                  <Home />
+                </Route>
+              </Switch>
+            </div>
+          </Router>
 
-        <button onClick={this.loginToggleHandler}>Login</button>
+          <button onClick={this.loginToggleHandler}>Login</button>
+        </div>
       </div>
     );
   }
