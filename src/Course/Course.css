@@ -1,0 +1,13 @@
+.Course .header {
+  display: flex;
+  flex-direction: column;
+}
+
+.Course .header p {
+  margin: 0;
+}
+
+.Course .header h1 {
+  margin: 0;
+  margin-bottom: 15px;
+}

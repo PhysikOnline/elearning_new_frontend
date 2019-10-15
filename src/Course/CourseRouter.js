@@ -14,16 +14,11 @@ function CourseRouter() {
           component={Course}
         />
         <Route path={match.path}>
-          <h3>Please select a topic.</h3>
+          <h3>Here should be a overview over all courses</h3>
         </Route>
       </Switch>
     </div>
   );
 }
-
-// function Topic() {
-//   let { topicId } = useParams();
-//   return <h3>Requested topic ID: {topicId}</h3>;
-// }
 
 export default CourseRouter;
