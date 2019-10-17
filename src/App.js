@@ -88,7 +88,7 @@ class App extends React.Component {
                   <Impressum />
                 </Route>
                 <Route path="/course">
-                  <CourseRouter />
+                  <CourseRouter login={this.state.loggedIn} />
                 </Route>
                 <Route path="/datenschutz">
                   <Datenschutz />
