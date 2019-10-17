@@ -11,16 +11,19 @@ class Course extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      course: undefined,
-      isLoding: true
+      course: null,
+      isLoading: true,
+      courseName: decodeURIComponent(this.props.match.params.courseName),
+      courseSemester: decodeURIComponent(this.props.match.params.courseSemester)
     };
+    this.getCourseContent = this.getCourseContent.bind(this);
   }
-  componentDidMount() {
+  getCourseContent() {
     fetch(
       "/course/coursecontent?Semester=" +
-        decodeURIComponent(this.props.match.params.courseSemester) +
+        this.state.courseSemester +
         "&Name=" +
-        decodeURIComponent(this.props.match.params.courseName),
+        this.state.courseName,
       {
         method: "GET"
       }
@@ -29,17 +32,36 @@ class Course extends React.Component {
       .then(courseResponse => {
         this.setState(previousState => {
           if (previousState.course !== courseResponse) {
-            return { course: courseResponse, isLoding: false };
+            return { course: courseResponse, isLoading: false };
           }
         });
       });
   }
+  componentDidMount() {
+    this.getCourseContent();
+  }
+  componentDidUpdate() {
+    this.getCourseContent();
+  }
   render() {
-    if (this.state.isLoding) {
+    if (this.state.isLoading) {
       return <Loading />;
     }
     if (this.state.course.error) {
       return <Error error={this.state.course.error} />;
+    }
+    let tabListSetting;
+    let tabPanelSetting;
+    if (this.state.course.auth.includes("admin")) {
+      tabListSetting = <Tab>Einstellungen</Tab>;
+      tabPanelSetting = (
+        <TabPanel>
+          <Settings
+            courseSemester={this.state.courseSemester}
+            courseName={this.state.courseName}
+          />
+        </TabPanel>
+      );
     }
     return (
       <div className="Course">
@@ -50,15 +72,13 @@ class Course extends React.Component {
         <Tabs>
           <TabList>
             <Tab>Übersicht</Tab>
-            <Tab>Einstellungen</Tab>
+            {tabListSetting}
           </TabList>
 
           <TabPanel>
             <p>Hier sollen grundlegende Infomationen über den Kurs stehen.</p>
           </TabPanel>
-          <TabPanel>
-            <Settings />
-          </TabPanel>
+          {tabPanelSetting}
         </Tabs>
       </div>
     );
