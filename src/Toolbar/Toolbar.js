@@ -8,7 +8,7 @@ function Toolbar(props) {
       <div onClick={props.drawerClickHandler}>
         <IconMenu />
       </div>
-      <h1>PhysikOnline</h1>
+      <h1>E-Learning</h1>
     </div>
   );
 }
