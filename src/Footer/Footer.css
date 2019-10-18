@@ -31,30 +31,37 @@
   animation-duration: 1s;
   animation-iteration-count: infinite;
   animation-fill-mode: forwards;
-  width: auto;
 }
 
 @-webkit-keyframes example {
   0% {
     height: 80%;
+    width: 80%;
   }
   30% {
     height: 85%;
+    width: 85%;
   }
   40% {
     height: 100%;
+    width: 100%;
   }
   50% {
     height: 80%;
+    width: 80%;
   }
   60% {
     height: 100%;
+    width: 100%;
   }
   70% {
     height: 85%;
+
+    width: 85%;
   }
   100% {
     height: 80%;
+    width: 80%;
   }
 }
 
@@ -62,23 +69,30 @@
 @keyframes example {
   0% {
     height: 80%;
+    width: 80%;
   }
   30% {
     height: 85%;
+    width: 85%;
   }
   40% {
     height: 100%;
+    width: 100%;
   }
   50% {
     height: 80%;
+    width: 80%;
   }
   60% {
     height: 100%;
+    width: 100%;
   }
   70% {
     height: 85%;
+    width: 85%;
   }
   100% {
     height: 80%;
+    width: 80%;
   }
 }
