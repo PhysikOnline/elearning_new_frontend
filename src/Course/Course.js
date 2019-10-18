@@ -6,6 +6,7 @@ import "./Course.css";
 import Loading from "../Additional/Loading";
 import Error from "../Additional/Error";
 import Settings from "./Settings";
+import Overview from "./Overview";
 
 class Course extends React.Component {
   constructor(props) {
@@ -76,7 +77,12 @@ class Course extends React.Component {
           </TabList>
 
           <TabPanel>
-            <p>Hier sollen grundlegende Infomationen über den Kurs stehen.</p>
+            <Overview
+              description={this.state.course.Description}
+              reloadContent={this.getCourseContent}
+              courseName={this.state.courseName}
+              courseSemester={this.state.courseSemester}
+            />
           </TabPanel>
           {tabPanelSetting}
         </Tabs>

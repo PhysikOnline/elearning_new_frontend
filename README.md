@@ -22,6 +22,7 @@ npm run start
 
 - react-router-dom
 - react-tabs
+- CKEditor [documentation](https://ckeditor.com/docs/ckeditor5/latest/)
 
 # IGNORE THIS PART
 
