@@ -21,7 +21,7 @@
   display: flex;
   flex-wrap: nowrap;
   height: auto;
-  overflow-x: scroll;
+  overflow-x: auto;
   border-bottom: 1px solid #aaa;
   margin: 0 0 10px;
   padding: 0;
@@ -64,6 +64,7 @@
   right: -4px;
   bottom: -5px;
   background: #fff;
+  outline: none;
 }
 
 .react-tabs__tab-panel {
