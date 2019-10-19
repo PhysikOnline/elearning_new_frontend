@@ -1,6 +1,5 @@
 import React from "react";
 import "./Footer.css";
-import { BrowserRouter as Router, Link } from "react-router-dom";
 
 import IconFavorite from "../static/IconFavorite";
 
