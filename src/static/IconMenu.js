@@ -1,5 +1,11 @@
 import React from "react";
 
+/**
+ * Material Icon Menu transformed to a IconMenu Component
+ *
+ * @version 1.0.1
+ * @author Keiwan Jamaly <keiwan@elearning.physik.uni-frankfurt.de>
+ */
 function IconMenu() {
   return (
     <svg

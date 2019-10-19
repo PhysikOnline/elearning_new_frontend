@@ -1,5 +1,11 @@
 import React from "react";
 
+/**
+ * Material Icon Favorite transformed to a IconFavorite Component
+ *
+ * @version 1.0.1
+ * @author Keiwan Jamaly <keiwan@elearning.physik.uni-frankfurt.de>
+ */
 function IvonFavorite() {
   return (
     <svg

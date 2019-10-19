@@ -1,6 +1,12 @@
 import React from "react";
 
-function IconMenu() {
+/**
+ * Material Icon Close transformed to a IconClose Component
+ *
+ * @version 1.0.1
+ * @author Keiwan Jamaly <keiwan@elearning.physik.uni-frankfurt.de>
+ */
+function IconClose() {
   return (
     <svg
       className="IconClose"
@@ -15,4 +21,4 @@ function IconMenu() {
   );
 }
 
-export default IconMenu;
+export default IconClose;
