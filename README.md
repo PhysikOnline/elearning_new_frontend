@@ -42,7 +42,32 @@ npm run styleguide
 - react-tabs
 - CKEditor [documentation](https://ckeditor.com/docs/ckeditor5/latest/)
 - react-datepicker [documentation](https://reactdatepicker.com/)
-- react-styleguidist [documentation](https://react-styleguidist.js.org/docs/getting-started)
+- react-styleguidist
+  [documentation](https://react-styleguidist.js.org/docs/getting-started)
+
+# SVG & Icons
+
+SVGs are imported by inserting the SVG tag into an component (in `/src/static`)
+and attaching a class to it.
+
+```js
+function YourSVG() {
+  return (
+    <svg className="YourSVG" your svg props>
+      your svg
+    </svg>
+  );
+}
+```
+
+The css class in your SVG enables you to customize it later in the component
+with CSS Selector, whereyou want to call the SVG.
+
+```css
+.TopComponent .YourSVG {
+  some-cool-styling: shit;
+}
+```
 
 # Default Readme from React
 
