@@ -4,6 +4,10 @@
 - npm
 - [backend](https://github.com/PhysikOnline/elearning_new_backend)
 
+# read before u start
+
+https://react-styleguidist.js.org/docs/getting-started
+
 # Start the project
 
 Install all dependencies with
@@ -18,13 +22,21 @@ and start the project then with
 npm run start
 ```
 
+to run the styleguide server use
+
+```
+npm run styleguide
+```
+
 # External packages we use
 
 - react-router-dom
 - react-tabs
 - CKEditor [documentation](https://ckeditor.com/docs/ckeditor5/latest/)
+- react-datepicker [documentation](https://reactdatepicker.com/)
+- react-styleguidist [documentation](https://react-styleguidist.js.org/docs/getting-started)
 
-# IGNORE THIS PART
+# Default Readme from React
 
 ## Available Scripts
 

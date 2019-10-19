@@ -26,14 +26,14 @@
 .Footer .IconFavorite {
   fill: red;
   -webkit-animation-name: heart; /* Safari 4.0 - 8.0 */
-  -webkit-animation-duration: 4s; /* Safari 4.0 - 8.0 */
-  animation-name: example;
+  -webkit-animation-duration: 1s; /* Safari 4.0 - 8.0 */
+  -webkit-animation-iteration-count: infinite; /* Safari 4.0 - 8.0 */
+  animation-name: heart;
   animation-duration: 1s;
   animation-iteration-count: infinite;
-  animation-fill-mode: forwards;
 }
 
-@-webkit-keyframes example {
+@-webkit-keyframes heart {
   0% {
     height: 80%;
     width: 80%;
@@ -66,7 +66,7 @@
 }
 
 /* Standard syntax */
-@keyframes example {
+@keyframes heart {
   0% {
     height: 80%;
     width: 80%;
