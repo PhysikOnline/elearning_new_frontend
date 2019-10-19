@@ -4,11 +4,15 @@
 - npm
 - [backend](https://github.com/PhysikOnline/elearning_new_backend)
 
-# read before u start
+# Learn before you start programming!
 
-https://react-styleguidist.js.org/docs/getting-started
+- [CSS Selectors](https://www.w3schools.com/CSSref/css_selectors.asp)
+
+- [Styleguidist](https://react-styleguidist.js.org/docs/getting-started)
 
 # Start the project
+
+**WARN:** Check that the backend is started.
 
 Install all dependencies with
 
@@ -16,13 +20,17 @@ Install all dependencies with
 npm install
 ```
 
-and start the project then with
+In the project directory, you can run:
 
 ```
 npm run start
 ```
 
-to run the styleguide server use
+Runs the app in the development mode.<br />
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+
+The page will reload if you make edits.<br />
+You will also see any lint errors in the console.
 
 ```
 npm run styleguide
@@ -38,17 +46,9 @@ npm run styleguide
 
 # Default Readme from React
 
+**we will integrate this reade in our readme in the future**
+
 ## Available Scripts
-
-In the project directory, you can run:
-
-### `yarn start`
-
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
 
 ### `yarn test`
 
