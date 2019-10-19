@@ -9,7 +9,7 @@ import "./Backdrop.css";
   a higher z-index.
  *
  * It executes everything what is passed into the `click` prop. You want to use 
- * it for closing the Sidebar and Modals, when clicking on the Backdrop.
+ * it for closing the SideDrawer and Modals, when clicking on the Backdrop.
  *
  * @version 1.0.1
  * @author Keiwan Jamaly <keiwan@elearning.physik.uni-frankfurt.de>
