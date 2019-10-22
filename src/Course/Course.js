@@ -32,7 +32,8 @@ class Course extends React.Component {
       .then(response => response.json())
       .then(courseResponse => {
         this.setState(previousState => {
-          if (previousState.course !== courseResponse) {
+            JSON.stringify(previousState.course) !==
+            JSON.stringify(courseResponse)
             return { course: courseResponse, isLoading: false };
           }
         });
