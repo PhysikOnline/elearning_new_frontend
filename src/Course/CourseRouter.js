@@ -45,9 +45,10 @@ function CourseRouter(props) {
   );
 }
 CourseRouter.propTypes = {
-  props: PropTypes.shape({
-    login: PropTypes.bool.isRequired
-  })
+  /**
+   * define the login stste
+   */
+  login: PropTypes.bool.isRequired
 };
 
 export default CourseRouter;
