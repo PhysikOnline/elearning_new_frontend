@@ -125,6 +125,7 @@ class Course extends React.Component {
               reloadContent={this.getCourseContent}
               courseName={this.state.courseName}
               courseSemester={this.state.courseSemester}
+              UserPermissions={this.state.course.auth}
             />
           </TabPanel>
           {/* display a Setting panel, if tabPanelSetting is defined */}
