@@ -1,5 +1,6 @@
 import React from "react";
 
+import GroupConfig from "./GroupConfig";
 
 import PropTypes from "prop-types";
 
@@ -23,11 +24,58 @@ class GroupRouter extends React.Component {
     // if (this.state.course.error) {
     //   return <Error error={this.state.course.error} />;
     // }
+    // define group settings varriable
+    let showGroupAdmin;
+    // show group settings, if the user is an admin
+    if (this.props.auth.includes("admin")) {
+      showGroupAdmin = (
+        <GroupConfig
+          GroupTimer={this.props.GroupTimer}
+          GroupTimerActive={this.props.GroupTimerActive}
+          courseSemester={this.props.courseSemester}
+          courseName={this.props.courseName}
+          reloadContent={this.props.reloadContent}
+          GroupVisible={this.props.GroupVisible}
+        />
+      );
+    }
     return (
       <div className="GroupRouter">
+        {/* display showGroupAdmin, if it is defined */}
+        {showGroupAdmin}
         <h1>Test header</h1>
       </div>
     );
   }
 }
+GroupRouter.propTypes = {
+  /**
+   * define the user permissions
+   */
+  auth: PropTypes.arrayOf(PropTypes.string).isRequired,
+  /**
+   * set the group assignment time
+   */
+  GroupTimer: PropTypes.string.isRequired,
+  /**
+   * sets, if the group assignment timer is active
+   */
+  GroupTimerActive: PropTypes.number.isRequired,
+  /**
+   * sets the Group assignment visibility
+   */
+  GroupVisible: PropTypes.number.isRequired,
+  /**
+   * sets the course Semester
+   */
+  courseSemester: PropTypes.string.isRequired,
+  /**
+   * sets the course Name
+   */
+  courseName: PropTypes.string.isRequired,
+  /**
+   * function to rerender the course
+   */
+  reloadContent: PropTypes.func.isRequired
+};
 export default GroupRouter;

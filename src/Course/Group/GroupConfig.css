@@ -1,0 +1,8 @@
+.GroupConfig .checkboxes {
+  display: flex;
+  flex-direction: column;
+}
+
+.GroupConfig .checkboxes .hideinput {
+  opacity: 0.5;
+}
