@@ -154,7 +154,7 @@ class Course extends React.Component {
               reloadContent={this.getCourseContent}
               courseName={this.state.courseName}
               courseSemester={this.state.courseSemester}
-              UserPermissions={this.saddtate.course.auth}
+              UserPermissions={this.state.course.auth}
             />
           </TabPanel>
           {/* display a Group panel, if tabPanelGroup is defined */}
@@ -170,7 +170,7 @@ Course.propTypes = {
   /**
    * define the login state
    */
-  login: PropTypes.string.isRequired,
+  login: PropTypes.bool.isRequired,
   match: PropTypes.shape({
     params: PropTypes.shape({
       /**
