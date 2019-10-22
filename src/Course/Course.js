@@ -7,6 +7,7 @@ import Loading from "../Additional/Loading";
 import Error from "../Additional/Error";
 import Settings from "./Settings";
 import Overview from "./Overview";
+import GroupRouter from "./Group/GroupRouter";
 
 /**
  * Main Course displayin Component, we fetch the cours information here and pass
@@ -103,6 +104,32 @@ class Course extends React.Component {
         </TabPanel>
       );
     }
+
+    // initialize values for the course tab group
+    let tabListGroup;
+    let tabPanelGroup;
+    /* display the group tabs, if the user is an admin or the course is visible
+    or the group assignment activation timer is set */
+    if (
+      this.state.course.auth.includes("admin") ||
+      ((this.state.course.GroupVisible || this.setState.GroupTimerActive) &&
+        this.props.login)
+    ) {
+      tabListGroup = <Tab>Gruppen</Tab>;
+      tabPanelGroup = (
+        <TabPanel>
+          <GroupRouter
+            GroupVisible={this.state.course.GroupVisible}
+            GroupTimerActive={this.state.course.GroupTimerActive}
+            GroupTimer={this.state.course.GroupTimer}
+            courseSemester={this.state.courseSemester}
+            courseName={this.state.courseName}
+            reloadContent={this.getCourseContent}
+            auth={this.state.course.auth}
+          />
+        </TabPanel>
+      );
+    }
     return (
       <div className="Course">
         {/* create a header for the course */}
@@ -114,6 +141,8 @@ class Course extends React.Component {
           {/* define the tabs of the course */}
           <TabList>
             <Tab>Übersicht</Tab>
+            {/* display groups if tabListGroup is defined */}
+            {tabListGroup}
             {/* display the settings if tabListSetting is defined */}
             {tabListSetting}
           </TabList>
@@ -125,9 +154,11 @@ class Course extends React.Component {
               reloadContent={this.getCourseContent}
               courseName={this.state.courseName}
               courseSemester={this.state.courseSemester}
-              UserPermissions={this.state.course.auth}
+              UserPermissions={this.saddtate.course.auth}
             />
           </TabPanel>
+          {/* display a Group panel, if tabPanelGroup is defined */}
+          {tabPanelGroup}
           {/* display a Setting panel, if tabPanelSetting is defined */}
           {tabPanelSetting}
         </Tabs>
