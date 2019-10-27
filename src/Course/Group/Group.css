@@ -1,0 +1,100 @@
+.Group {
+  display: flex;
+  flex-direction: row;
+  margin: 3px;
+  box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.14),
+    /* border: 1px solid black; */ 0 2px 1px -1px rgba(0, 0, 0, 0.12),
+    0 1px 3px 0 rgba(0, 0, 0, 0.2);
+  align-items: center;
+  justify-content: space-between;
+}
+
+.Group > .buttonContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px;
+}
+
+.Group > .buttonContainer > input {
+  background-color: white;
+  border: none;
+  height: 110%;
+  width: 110%;
+  font-size: 18px;
+  box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.14),
+    /* border: 1px solid black; */ 0 2px 1px -1px rgba(0, 0, 0, 0.12),
+    0 1px 3px 0 rgba(0, 0, 0, 0.2);
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+.Group > .container > .datePicker {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+}
+
+.Group > .container > .datePicker > div {
+  margin: 5px;
+}
+
+.Group > .container > .datePicker > div > select {
+  font-size: 16px;
+  border: none;
+  background: white;
+  color: black;
+  /* for Firefox */
+  -moz-appearance: none;
+  /* for Chrome */
+  -webkit-appearance: none;
+}
+
+.Group > .container > .datePicker > div > select::-ms-expand {
+  display: none;
+}
+
+.Group > .container > .GroupNameTutor > input[type="text"] {
+  border: none;
+  color: black;
+  border-bottom: none;
+  margin: 3px;
+  padding-left: 1vw;
+  padding-right: 1vw;
+  padding-bottom: 0.2vw;
+}
+
+.Group > .container > .GroupNameTutor {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+}
+
+@media (min-width: 1025px) {
+  /* breite Browserfenster */
+  .Group > .container > .GroupNameTutor > input[name="GroupName"] {
+    font-size: 30px;
+  }
+  .Group > .container > .GroupNameTutor > input[name="Tutor"] {
+    font-size: 13px;
+  }
+}
+@media (max-width: 1024px) {
+  /* mobile Geräte */
+  .Group > .container > .GroupNameTutor > input[name="GroupName"] {
+    font-size: 17px;
+  }
+
+  .Group > .container > .GroupNameTutor > input[name="Tutor"] {
+    font-size: 10px;
+  }
+}
+
+.Group > .container > .GroupNameTutor > input[type="text"]:disabled {
+  background: #ffffff;
+  opacity: 1;
+  border: none;
+}

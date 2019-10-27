@@ -1,8 +1,9 @@
 import React from "react";
 
-import GroupConfig from "./GroupConfig";
-
 import PropTypes from "prop-types";
+
+import GroupConfig from "./GroupConfig";
+import Group from "./Group";
 
 /**
  * Component to manage all course components, it is also used to fetch the course data
@@ -12,11 +13,40 @@ import PropTypes from "prop-types";
  *
  */
 class GroupRouter extends React.Component {
-  // constructor(props) {
-  //   super(props);
-  //   this.state = {
-  //   };
-  // }
+  constructor(props) {
+    super(props);
+    this.state = {
+      groups: []
+    };
+  }
+  /**
+   * function to fetch all groups
+   */
+  getGroups() {
+    fetch(
+      "/course/group/groupcontent?Semester=" +
+        this.props.courseSemester +
+        "&Name=" +
+        this.props.courseName,
+      {
+        method: "GET"
+      }
+    )
+      .then(response => response.json())
+      .then(responseJSON => {
+        this.setState(previousState => {
+          if (
+            JSON.stringify(responseJSON) !==
+            JSON.stringify(previousState.groups)
+          ) {
+            return { groups: responseJSON };
+          }
+        });
+      });
+  }
+  componentDidMount() {
+    this.getGroups();
+  }
   render() {
     // if (this.state.isLoading) {
     //   return <Loading />;
@@ -43,7 +73,9 @@ class GroupRouter extends React.Component {
       <div className="GroupRouter">
         {/* display showGroupAdmin, if it is defined */}
         {showGroupAdmin}
-        <h1>Test header</h1>
+        {this.state.groups.map(x => (
+          <Group Group={x} auth={this.props.auth} key={x.GroupName} />
+        ))}
       </div>
     );
   }
