@@ -8,6 +8,7 @@
   background-color: var(--poblue);
   color: white;
   align-items: center;
+  z-index: 50;
 }
 
 @media (min-width: 1025px) {
