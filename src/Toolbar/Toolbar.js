@@ -30,7 +30,7 @@ function Toolbar(props) {
         <IconMenu />
       </div>
       {/* write in our app name :)  */}
-      <h1>E-Learning</h1>
+      <a href="/">E-Learning</a>
     </div>
   );
 }
