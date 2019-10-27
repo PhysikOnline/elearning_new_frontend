@@ -113,7 +113,7 @@ class Course extends React.Component {
     if (
       this.state.course.auth.includes("admin") ||
       ((this.state.course.GroupVisible || this.setState.GroupTimerActive) &&
-        this.props.login)
+        this.state.course.auth.includes("user"))
     ) {
       tabListGroup = <Tab>Gruppen</Tab>;
       tabPanelGroup = (
