@@ -68,8 +68,12 @@ class Group extends React.Component {
         <div className="container">
           <div className="GroupNameTutor">
             <input
+              className="optInput"
               style={{
-                width: (this.state.newGroup.GroupName.length + 1) * 0.52 + "em"
+                width:
+                  (Math.max(this.state.newGroup.GroupName.length, 13) + 1) *
+                    0.52 +
+                  "em"
               }}
               name="GroupName"
               placeholder="Gruppenname"
@@ -79,8 +83,11 @@ class Group extends React.Component {
               type="text"
             />
             <input
+              className="optInput"
               style={{
-                width: (this.state.newGroup.Tutor.length + 1) * 0.52 + "em"
+                width:
+                  (Math.max(this.state.newGroup.Tutor.length, 5) + 1) * 0.52 +
+                  "em"
               }}
               name="Tutor"
               placeholder="Tutor"
@@ -140,6 +147,20 @@ class Group extends React.Component {
               timeCaption="Time"
               dateFormat="h:mm aa"
               disabled={isUser}
+            />
+            <input
+              className="optInput"
+              style={{
+                width:
+                  (Math.max(this.state.newGroup.Room.length, 5) + 1) * 0.52 +
+                  "em"
+              }}
+              name="Room"
+              placeholder="Raum"
+              value={this.state.newGroup.Room}
+              onChange={this.handleChnage}
+              disabled={isUser}
+              type="text"
             />
           </div>
         </div>

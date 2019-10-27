@@ -68,7 +68,7 @@
   display: none;
 }
 
-.Group > .container > .GroupNameTutor > input[type="text"] {
+.Group .optInput[type="text"] {
   border: none;
   color: black;
   border-bottom: none;
@@ -78,33 +78,38 @@
   padding-bottom: 0.2vw;
 }
 
-.Group > .container > .GroupNameTutor {
+.Group .GroupNameTutor {
   display: flex;
   flex-direction: row;
   align-items: baseline;
 }
 
+.Group .optInput[name="Room"] {
+  color: rgb(78, 78, 78);
+  font-size: 16px;
+}
+
 @media (min-width: 1025px) {
   /* breite Browserfenster */
-  .Group > .container > .GroupNameTutor > input[name="GroupName"] {
+  .Group .optInput[name="GroupName"] {
     font-size: 30px;
   }
-  .Group > .container > .GroupNameTutor > input[name="Tutor"] {
+  .Group .optInput[name="Tutor"] {
     font-size: 13px;
   }
 }
 @media (max-width: 1024px) {
   /* mobile Geräte */
-  .Group > .container > .GroupNameTutor > input[name="GroupName"] {
+  .Group .optInput[name="GroupName"] {
     font-size: 17px;
   }
 
-  .Group > .container > .GroupNameTutor > input[name="Tutor"] {
+  .Group .optInput[name="Tutor"] {
     font-size: 10px;
   }
 }
 
-.Group > .container > .GroupNameTutor > input[type="text"]:disabled {
+.Group .optInput[type="text"]:disabled {
   background: #ffffff;
   opacity: 1;
   border: none;
