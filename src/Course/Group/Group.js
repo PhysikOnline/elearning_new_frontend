@@ -144,7 +144,21 @@ class Group extends React.Component {
           </div>
         </div>
         <div className="buttonContainer">
-          <label>1/12</label>
+          <label>
+            1/
+            {isUser ? (
+              this.state.newGroup.Maxuser
+            ) : (
+              <input
+                value={this.state.newGroup.Maxuser}
+                onChange={this.handleChnage}
+                type="number"
+                name="Maxuser"
+                min="10"
+                max="100"
+              />
+            )}
+          </label>
           <input type="button" value={isUser ? "Beitreten" : "Löschen"} />
         </div>
       </div>

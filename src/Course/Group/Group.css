@@ -16,6 +16,17 @@
   margin: 20px;
 }
 
+.Group > .buttonContainer > label {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  margin: 3px;
+}
+.Group > .buttonContainer > label > input {
+  width: 35px;
+  font-size: 16px;
+}
+
 .Group > .buttonContainer > input {
   background-color: white;
   border: none;
