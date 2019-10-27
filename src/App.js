@@ -74,12 +74,14 @@ class App extends React.Component {
 
     return (
       <div className="App">
-        <Toolbar drawerClickHandler={this.sideDrawerToggleClickHandler} />
-        <SideDrawer show={this.state.sideDrawerOpen} />
-        {backdrop}
-        {login}
-        <div className="positioning">
-          <Router>
+        {/* every content has to be in the router, this make other links or switches
+        in other components work */}
+        <Router>
+          <Toolbar drawerClickHandler={this.sideDrawerToggleClickHandler} />
+          <SideDrawer show={this.state.sideDrawerOpen} />
+          {backdrop}
+          {login}
+          <div className="positioning">
             <div>
               {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
@@ -98,10 +100,10 @@ class App extends React.Component {
                 </Route>
               </Switch>
             </div>
-          </Router>
+          </div>
+        </Router>
 
-          <button onClick={this.loginToggleHandler}>Login</button>
-        </div>
+        <button onClick={this.loginToggleHandler}>Login</button>
       </div>
     );
   }
