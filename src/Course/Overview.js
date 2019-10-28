@@ -40,9 +40,14 @@ class Overview extends React.Component {
         "&Name=" +
         this.props.courseName +
         "&Description=" +
-        this.state.newEditorText,
+        encodeURIComponent(this.state.newEditorText),
       {
-        method: "POST"
+        method: "POST",
+        headers: {
+          "Content-Type": "text/html"
+          // 'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: { Description: this.state.newEditorText }
       }
     )
       // get text from the response
