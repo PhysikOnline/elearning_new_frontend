@@ -9,10 +9,12 @@ import PropTypes from "prop-types";
  * @version 1.0.1
  * @author Keiwan Jamaly <keiwan@elearning.physik.uni-frankfurt.de>
  */
+
 function SideDrawer(props) {
   return (
     <div className={props.show ? "SideDrawer open" : "SideDrawer"}>
       <div>hello</div>
+      <button onClick={props.toggleLogin}>Login</button>
     </div>
   );
 }
@@ -20,6 +22,7 @@ SideDrawer.propTypes = {
   /**
    * Define the visibility of the SideDrawer
    */
-  show: PropTypes.bool.isRequired
+  show: PropTypes.bool.isRequired,
+  onClickHandler: PropTypes.func.isRequired
 };
 export default SideDrawer;
