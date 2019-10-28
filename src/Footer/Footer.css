@@ -42,6 +42,7 @@
 
 .footer__links li {
   padding: 0 0.5rem;
+  margin-bottom: 15px;
 }
 
 .footer__links a {
