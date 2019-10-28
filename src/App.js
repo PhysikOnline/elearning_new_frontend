@@ -38,6 +38,12 @@ class App extends React.Component {
       return { loginOpen: !previousState.loginOpen };
     });
   }
+
+  loginSideDrawerClickHandler() {
+    this.setState({ sideDrawerOpen: false });
+    this.setState({ loginOpen: true });
+  }
+
   updateLoginState() {
     fetch("/user/checklogin", {
       method: "GET"
@@ -78,8 +84,13 @@ class App extends React.Component {
         in other components work */}
         <Router>
           <Toolbar drawerClickHandler={this.sideDrawerToggleClickHandler} />
-          <SideDrawer show={this.state.sideDrawerOpen} />
+          <SideDrawer
+            show={this.state.sideDrawerOpen}
+            toggleLogin={this.loginToggleHandler}
+          />
+
           {backdrop}
+
           {login}
           <div className="positioning">
             <div>
@@ -102,8 +113,6 @@ class App extends React.Component {
             </div>
           </div>
         </Router>
-
-        <button onClick={this.loginToggleHandler}>Login</button>
       </div>
     );
   }
