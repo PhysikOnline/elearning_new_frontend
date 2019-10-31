@@ -54,7 +54,7 @@ class GroupConfig extends React.Component {
   handleGroupVisibility() {
     // POST data
     fetch(
-      "/course/group/tooglegroupvisibility?Semester=" +
+      "/course/group/togglegroupvisibility?Semester=" +
         this.props.courseSemester +
         "&Name=" +
         this.props.courseName,
@@ -71,7 +71,7 @@ class GroupConfig extends React.Component {
    */
   handleGroupTimerActive() {
     fetch(
-      "/course/group/tooglegrouptimeractive?Semester=" +
+      "/course/group/togglegrouptimeractive?Semester=" +
         this.props.courseSemester +
         "&Name=" +
         this.props.courseName,

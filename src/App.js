@@ -92,6 +92,7 @@ class App extends React.Component {
           {backdrop}
 
           {login}
+
           <div className="positioning">
             <div>
               {/* A <Switch> looks through its children <Route>s and

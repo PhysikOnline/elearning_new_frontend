@@ -55,8 +55,8 @@ class Overview extends React.Component {
       // process response text
       .then(responseText => {
         switch (responseText) {
-          case "Sucsessfull":
-            // on succsessful response reloade page contet.
+          case "successfull":
+            // on successful response reloade page contet.
             this.props.reloadContent();
             break;
           default:
