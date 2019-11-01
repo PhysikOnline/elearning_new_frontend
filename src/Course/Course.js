@@ -112,6 +112,7 @@ class Course extends React.Component {
     or the group assignment activation timer is set */
     if (
       this.state.course.auth.includes("admin") ||
+      this.state.course.auth.includes("tutor") ||
       ((this.state.course.GroupVisible || this.setState.GroupTimerActive) &&
         this.state.course.auth.includes("user"))
     ) {
