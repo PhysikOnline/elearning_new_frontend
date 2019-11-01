@@ -18,7 +18,6 @@ import "react-datepicker/dist/react-datepicker.css";
 class Group extends React.Component {
   constructor(props) {
     super(props);
-    console.log(this.props);
     this.state = {
       newGroup: this.props.Group
     };
