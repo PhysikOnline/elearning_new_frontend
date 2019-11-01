@@ -11,6 +11,18 @@
   margin: 0;
   margin-bottom: 15px;
 }
+@media (min-width: 1025px) {
+  /* breite Browserfenster */
+  .Course .header h1 {
+    font-size: 32px;
+  }
+}
+@media (max-width: 1024px) {
+  /* mobile Geräte */
+  .Course .header h1 {
+    font-size: 24px;
+  }
+}
 
 /* react tab */
 .react-tabs {
