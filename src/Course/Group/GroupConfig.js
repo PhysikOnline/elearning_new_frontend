@@ -17,10 +17,8 @@ import "react-datepicker/dist/react-datepicker.css";
 class GroupConfig extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      // set the group timer to state, for modification
-      newGroupTimer: parseISO(this.props.GroupTimer)
-    };
+    // this.state = {
+    // };
     this.handleGroupVisibility = this.handleGroupVisibility.bind(this);
     this.handleGroupTimerActive = this.handleGroupTimerActive.bind(this);
     this.setGroupTimer = this.setGroupTimer.bind(this);
@@ -28,18 +26,25 @@ class GroupConfig extends React.Component {
   /**
    * POST the group timer to the api
    */
-  setGroupTimer() {
+  setGroupTimer(event) {
+    // convert date to mysql time
+    let date = event
+      .toLocaleString({ timeZone: "CET" })
+      .replace(" ", "")
+      .split(",");
+    date[0] = date[0]
+      .split(".")
+      .reverse()
+      .join("-");
+    date = date.join(" ");
+    // post data to backend
     fetch(
       "/course/group/grouptimer?Semester=" +
         this.props.courseSemester +
         "&Name=" +
         this.props.courseName +
         "&Time=" +
-        this.state.newGroupTimer
-          // convert the string to an mysql readable format
-          .toISOString()
-          .slice(0, 19)
-          .replace("T", " "),
+        date,
       { method: "POST" }
     )
       // get the response text
@@ -128,12 +133,7 @@ class GroupConfig extends React.Component {
             // pare the default selected (this is also a state for with the api)
             selected={parseISO(this.props.GroupTimer)}
             // set the on change function to set the group timer
-            onChange={e => {
-              this.setState({
-                newGroupTimer: e
-              });
-              this.setGroupTimer();
-            }}
+            onChange={this.setGroupTimer}
             // some datpicker configs
             showTimeSelect
             timeFormat="HH:mm"
