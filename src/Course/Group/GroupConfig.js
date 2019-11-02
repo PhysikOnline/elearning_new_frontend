@@ -1,6 +1,5 @@
 import React from "react";
 import "./GroupConfig.css";
-import { parseISO } from "date-fns";
 import PropTypes from "prop-types";
 
 // import datepicker (See README.md)
@@ -29,9 +28,14 @@ class GroupConfig extends React.Component {
   setGroupTimer(event) {
     // convert date to mysql time
     let date = event
-      .toISOString()
-      .replace("T", " ")
-      .replace("Z", "");
+      .toLocaleString()
+      .replace(",", "")
+      .split(" ");
+    date[0] = date[0]
+      .split(".")
+      .reverse()
+      .join("-");
+    date = date.join(" ");
     // post data to backend
     fetch(
       "/course/group/grouptimer?Semester=" +
@@ -126,7 +130,8 @@ class GroupConfig extends React.Component {
           </label>
           <DatePicker
             // pare the default selected (this is also a state for with the api)
-            selected={parseISO(this.props.GroupTimer)}
+
+            selected={new Date(Date.parse(this.props.GroupTimer))}
             // set the on change function to set the group timer
             onChange={this.setGroupTimer}
             // some datpicker configs
