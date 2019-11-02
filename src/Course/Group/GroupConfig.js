@@ -29,14 +29,9 @@ class GroupConfig extends React.Component {
   setGroupTimer(event) {
     // convert date to mysql time
     let date = event
-      .toLocaleString({ timeZone: "CET" })
-      .replace(" ", "")
-      .split(",");
-    date[0] = date[0]
-      .split(".")
-      .reverse()
-      .join("-");
-    date = date.join(" ");
+      .toISOString()
+      .replace("T", " ")
+      .replace("Z", "");
     // post data to backend
     fetch(
       "/course/group/grouptimer?Semester=" +
