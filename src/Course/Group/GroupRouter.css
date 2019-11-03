@@ -11,12 +11,12 @@
     0 2px 1px -1px rgba(0, 0, 0, 0.12), 0 1px 3px 0 rgba(0, 0, 0, 0.2);
   align-items: center;
   justify-content: space-between;
+  flex-wrap: wrap;
 }
 
 .GroupRouter .GroupBlock .container {
   display: flex;
   flex-direction: column;
-  margin: 20px;
 }
 
 .GroupRouter .GroupBlock .GroupNameTutor {
@@ -44,9 +44,20 @@
 
 .GroupRouter .GroupBlock .buttonContainer {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 20px;
+  flex-direction: row;
+  align-items: baseline;
+}
+
+.GroupRouter .GroupBlock .buttonContainer > input {
+  margin-left: 10px;
+  background-color: white;
+  border: none;
+  height: 110%;
+  width: 110%;
+  font-size: 18px;
+  box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.14),
+    /* border: 1px solid black; */ 0 2px 1px -1px rgba(0, 0, 0, 0.12),
+    0 1px 3px 0 rgba(0, 0, 0, 0.2);
 }
 
 .GroupRouter .linkHover:hover {
@@ -55,6 +66,12 @@
 
 @media (min-width: 1025px) {
   /* breite Browserfenster */
+  .GroupRouter .GroupBlock .buttonContainer {
+    margin: 20px;
+  }
+  .GroupRouter .GroupBlock .container {
+    margin: 20px;
+  }
   .GroupRouter .GroupBlock .GroupName {
     font-size: 30px;
   }
@@ -64,6 +81,14 @@
 }
 @media (max-width: 1024px) {
   /* mobile Geräte */
+  .GroupRouter .GroupBlock .buttonContainer {
+    margin: 5px;
+    margin-left: 10px;
+  }
+  .GroupRouter .GroupBlock .container {
+    margin: 5px;
+    margin-left: 10px;
+  }
   .GroupRouter .GroupBlock .GroupName {
     font-size: 17px;
   }

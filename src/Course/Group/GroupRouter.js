@@ -2,6 +2,7 @@ import React from "react";
 import "./GroupRouter.css";
 
 import PropTypes from "prop-types";
+import { parseISO } from "date-fns";
 
 import GroupConfig from "./GroupConfig";
 import Loading from "../../Additional/Loading";
@@ -23,10 +24,20 @@ class GroupRouter extends React.Component {
       openGroup: null,
       firstRender: true,
       isLoadingGroups: true,
-      isLoadingAssignedGroups: true
+      isLoadingAssignedGroups: true,
+      isLoadingGroupChange: false,
+      mountTime: new Date(),
+      currentTimer: new Date().toISOString()
     };
     this.returnGroupBlock = this.returnGroupBlock.bind(this);
     this.unsetOpenGroup = this.unsetOpenGroup.bind(this);
+    this.handleJoin = this.handleJoin.bind(this);
+    this.handleLeave = this.handleLeave.bind(this);
+    this.setOpenGroup = this.setOpenGroup.bind(this);
+    this.getGroups = this.getGroups.bind(this);
+  }
+  setOpenGroup(groupName) {
+    this.setState({ openGroup: groupName });
   }
   unsetOpenGroup() {
     this.setState({ openGroup: null });
@@ -96,27 +107,110 @@ class GroupRouter extends React.Component {
         })
       );
   }
+  handleLeave(event) {
+    this.setState({ isLoadingGroupChange: true });
+    fetch(
+      "/course/group/leavegroup?Semester=" +
+        this.props.courseSemester +
+        "&CourseName=" +
+        this.props.courseName +
+        "&GroupName=" +
+        event.target.name,
+      {
+        method: "POST"
+      }
+    )
+      .then(response => response.json())
+      .then(responseJSON => {
+        if (responseJSON.error) {
+          alert(JSON.stringify(responseJSON.error));
+        } else if (responseJSON.succsessfull) {
+          this.getGroups();
+        }
+      })
+      .then(this.setState({ isLoadingGroupChange: false }));
+  }
+  handleJoin(event) {
+    this.setState({ isLoadingGroupChange: true });
+    fetch(
+      "/course/group/joingroup?Semester=" +
+        this.props.courseSemester +
+        "&CourseName=" +
+        this.props.courseName +
+        "&GroupName=" +
+        event.target.name,
+      {
+        method: "POST"
+      }
+    )
+      .then(response => response.json())
+      .then(responseJSON => {
+        if (responseJSON.error) {
+          alert(JSON.stringify(responseJSON.error));
+        } else if (responseJSON.succsessfull) {
+          this.getGroups();
+        }
+      })
+      .then(this.setState({ isLoadingGroupChange: false }));
+  }
   componentDidMount() {
     this.getGroups();
+    setInterval(() => {
+      this.setState({
+        currentTimer: new Date().toISOString()
+      });
+    }, 500);
   }
-  componentDidUpdate() {
-    this.getGroups();
+  componentDidUpdate(prevProps, prevState) {
+    // remove currentTimer from state, otherwise it will always reload the page
+    let old = this.state;
+    let newstate = prevState;
+    delete old.currentTimer;
+    delete old.newstate;
+
+    if (
+      JSON.stringify(old) !== JSON.stringify(newstate) ||
+      JSON.stringify(prevProps) !== JSON.stringify(this.props)
+    ) {
+      this.getGroups();
+    }
   }
   returnGroupBlock(group) {
     let joinButton;
     if (
       !this.props.auth.includes("admin") &&
       !this.props.auth.includes("tutor") &&
-      this.state.assignedGroups.length === 0
+      this.state.assignedGroups.length === 0 &&
+      group.Maxuser > group.AssignedUser
     ) {
-      joinButton = <input type="button" value="Beitreten" />;
+      joinButton = (
+        <input
+          name={group.GroupName}
+          type="button"
+          value="Beitreten"
+          onClick={this.handleJoin}
+          disabled={
+            this.state.isLoadingGroupChange ||
+            new Date(Date.parse(this.state.currentTimer)) <
+              new Date(Date.parse(this.props.GroupTimer))
+          }
+        />
+      );
     } else if (
       !this.props.auth.includes("admin") &&
       !this.props.auth.includes("tutor") &&
       this.state.assignedGroups.length === 1 &&
       this.state.assignedGroups[0] === group.GroupName
     ) {
-      joinButton = <input type="button" value="Verlassen" />;
+      joinButton = (
+        <input
+          name={group.GroupName}
+          type="button"
+          value="Verlassen"
+          onClick={this.handleLeave}
+          disabled={this.state.isLoadingGroupChange}
+        />
+      );
     }
     return (
       <div className="GroupBlock" onClick={this.handleGroupClick}>
@@ -137,9 +231,9 @@ class GroupRouter extends React.Component {
           </div>
           <div className="datePicker">
             <label>{group.Weekday}</label>
-            <label>{group.Starttime}</label>
+            <label>{group.Starttime.substring(0, 5)}</label>
             <div>bis</div>
-            <label>{group.Endtime}</label>
+            <label>{group.Endtime.substring(0, 5)}</label>
             <label>{group.Room}</label>
           </div>
         </div>
@@ -154,6 +248,8 @@ class GroupRouter extends React.Component {
   }
 
   render() {
+    // console.log(this.props.GroupTimer);
+    // console.log(new Date());
     if (this.state.isLoadingAssignedGroups || this.state.isLoadingGroups) {
       return <Loading />;
     }
@@ -167,12 +263,19 @@ class GroupRouter extends React.Component {
           <label className="linkHover" onClick={this.unsetOpenGroup}>
             Zur Gruppenuebersicht
           </label>
-          <div>{this.state.openGroup}</div>
+
           <Group
             Group={this.state.groups.find(
               group => group.GroupName === this.state.openGroup
             )}
             auth={this.props.auth}
+            courseSemester={this.props.courseSemester}
+            courseName={this.props.courseName}
+            reloadContent={this.getGroups}
+            setOpenGroup={this.setOpenGroup}
+            otherGroups={this.state.groups
+              .map(group => group.GroupName)
+              .filter(groupName => groupName !== this.state.openGroup)}
           />
         </div>
       );
@@ -193,10 +296,27 @@ class GroupRouter extends React.Component {
         />
       );
     }
+
+    // display group timer, if it is set
+    let displayGroupTimer;
+    if (
+      !this.props.auth.includes("admin") &&
+      parseISO(this.props.GroupTimer) > this.state.mountTime
+    ) {
+      displayGroupTimer = (
+        <div>
+          Gruppenanmeldung startet um:{" "}
+          {parseISO(this.props.GroupTimer).toLocaleString()}
+        </div>
+      );
+    }
+
     return (
       <div className="GroupRouter">
         {/* display showGroupAdmin, if it is defined */}
         {showGroupAdmin}
+        {/* display displayGroupTimer, if it is defined */}
+        {displayGroupTimer}
         {this.state.groups.map(x => (
           <div key={x.GroupName}>{this.returnGroupBlock(x)}</div>
           // <Group Group={x} auth={this.props.auth} key={x.GroupName} />

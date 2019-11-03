@@ -19,21 +19,50 @@ class Group extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      newGroup: this.props.Group
+      newGroup: this.props.Group,
+      validity: {
+        GroupName: false,
+        Tutor: false
+      }
     };
     this.handleChnage = this.handleChnage.bind(this);
     this.handleTimeChnage = this.handleTimeChnage.bind(this);
     this.TimeInJavaScriptDate = this.TimeInJavaScriptDate.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
   handleChnage(event) {
-    // console.log(event.target);
-    // event.target.style.width = (event.target.value.length + 1) * 8 + "px";
     let EVENT = event.target;
+    let EventNumber;
+    if (EVENT.validity.patternMismatch) {
+      switch (EVENT.name) {
+        case "GroupName":
+          EVENT.setCustomValidity(
+            "Gruppenname kann nur aus ÄÖÜäöüß (leer) A-Z a-z 0-9 bestehen und muss 3 bis 20 Zeichen beinhalten. Gruppenname muessen in einem Kurs einmalig sein."
+          );
+          break;
+        case "Tutor":
+          EVENT.setCustomValidity(
+            "Tutor kann nur aus a-z 0-9 bestehen und kann maximal 8 Zeichen beinhalten"
+          );
+          break;
+        default:
+          break;
+      }
+    } else {
+      EVENT.setCustomValidity("");
+      if (EVENT.name === "Maxuser") {
+        EventNumber = Number(EVENT.value);
+      }
+    }
     this.setState(prevState => ({
       newGroup: {
         // object that we want to update
         ...prevState.newGroup, // keep all other key-value pairs
-        [EVENT.name]: EVENT.value
+        [EVENT.name]: EventNumber ? EventNumber : EVENT.value
+      },
+      validity: {
+        ...prevState.validity,
+        [EVENT.name]: EVENT.validity.patternMismatch
       }
     }));
   }
@@ -51,6 +80,46 @@ class Group extends React.Component {
       }
     }));
   }
+  handleSubmit() {
+    if (!this.state.validity.GroupName && !this.state.validity.Tutor) {
+      fetch(
+        "/course/group/insertorupdategroup?Semester=" +
+          this.props.courseSemester +
+          "&CourseName=" +
+          this.props.courseName +
+          "&GroupName=" +
+          this.state.newGroup.GroupName +
+          "&Tutor=" +
+          this.state.newGroup.Tutor +
+          "&Starttime=" +
+          this.state.newGroup.Starttime +
+          "&Endtime=" +
+          this.state.newGroup.Endtime +
+          "&Weekday=" +
+          this.state.newGroup.Weekday +
+          "&MaxUser=" +
+          this.state.newGroup.Maxuser +
+          "&OldGroupName=" +
+          this.props.Group.GroupName +
+          "&Room=" +
+          this.state.newGroup.Room,
+        { method: "POST" }
+      )
+        .then(response => response.json())
+        .then(responseJSON => {
+          if (responseJSON.error) {
+            alert(JSON.stringify(responseJSON.error));
+          } else if (responseJSON.succsessfull) {
+            this.props.setOpenGroup(this.state.newGroup.GroupName);
+          } else {
+            alert("i don't now what, but something went wrong :-|");
+          }
+        })
+        .then(this.props.reloadContent);
+    } else {
+      alert("Felder sind nicht korrekt ausgefuellt");
+    }
+  }
   TimeInJavaScriptDate(timeToChoose) {
     let date = new Date();
     let time = this.state.newGroup[timeToChoose].split(":");
@@ -61,41 +130,61 @@ class Group extends React.Component {
   }
   render() {
     let isUser = !this.props.auth.includes("admin");
+    let submitButton;
+    /* render a submit button, if the server description is diffrend from the
+    editor description */
+    console.log(JSON.stringify(this.state.newGroup));
+    console.log(JSON.stringify(this.props.Group));
+    console.log(
+      JSON.stringify(this.state.newGroup) !== JSON.stringify(this.props.Group)
+    );
+    if (
+      JSON.stringify(this.state.newGroup) !== JSON.stringify(this.props.Group)
+    ) {
+      submitButton = (
+        /* definig the submit button which appears on text change */
+        <button
+          className={
+            !this.state.validity.GroupName && !this.state.validity.Tutor
+              ? "valid submit"
+              : "notvalid submit"
+          }
+          onClick={this.handleSubmit}
+        >
+          Speichern
+        </button>
+      );
+    }
     return (
       <div className="Group">
         {/* display showGroupAdmin, if it is defined */}
         <div className="container">
-          <div className="GroupNameTutor">
-            <input
-              className="optInput"
-              style={{
-                width:
-                  (Math.max(this.state.newGroup.GroupName.length, 13) + 1) *
-                    0.52 +
-                  "em"
-              }}
-              name="GroupName"
-              placeholder="Gruppenname"
-              value={this.state.newGroup.GroupName}
-              onChange={this.handleChnage}
-              disabled={isUser}
-              type="text"
-            />
-            <input
-              className="optInput"
-              style={{
-                width:
-                  (Math.max(this.state.newGroup.Tutor.length, 5) + 1) * 0.52 +
-                  "em"
-              }}
-              name="Tutor"
-              placeholder="Tutor"
-              value={this.state.newGroup.Tutor}
-              onChange={this.handleChnage}
-              disabled={isUser}
-              type="text"
-            />
-          </div>
+          <input
+            className="optInput"
+            name="GroupName"
+            placeholder="Gruppenname"
+            value={this.state.newGroup.GroupName}
+            onChange={this.handleChnage}
+            disabled={isUser}
+            type="text"
+            required
+            pattern={
+              this.props.otherGroups
+                .map(group => "(?!^" + group + "$)")
+                .join("") + "(^[ÄÖÜäöüßA-Za-z0-9 ]{3,20}$)"
+            }
+          />
+          <input
+            className="optInput"
+            name="Tutor"
+            placeholder="Tutor"
+            value={this.state.newGroup.Tutor}
+            onChange={this.handleChnage}
+            disabled={isUser}
+            type="text"
+            maxLength="8"
+            pattern="^[a-z0-9]{1,8}$"
+          />
           <div className="datePicker">
             <div>
               <select
@@ -149,23 +238,19 @@ class Group extends React.Component {
             />
             <input
               className="optInput"
-              style={{
-                width:
-                  (Math.max(this.state.newGroup.Room.length, 5) + 1) * 0.52 +
-                  "em"
-              }}
               name="Room"
               placeholder="Raum"
               value={this.state.newGroup.Room}
               onChange={this.handleChnage}
               disabled={isUser}
               type="text"
+              maxLength="15"
             />
           </div>
         </div>
         <div className="buttonContainer">
           <label>
-            1/
+            {this.state.newGroup.AssignedUser}/
             {isUser ? (
               this.state.newGroup.Maxuser
             ) : (
@@ -174,12 +259,12 @@ class Group extends React.Component {
                 onChange={this.handleChnage}
                 type="number"
                 name="Maxuser"
-                min="10"
-                max="100"
+                min={this.state.newGroup.AssignedUser}
               />
             )}
           </label>
-          <input type="button" value={isUser ? "Beitreten" : "Löschen"} />
+          {!isUser ? <input type="button" value="Löschen" /> : undefined}
+          {submitButton}
         </div>
       </div>
     );
