@@ -19,6 +19,7 @@ class App extends React.Component {
       loggedIn: false
     };
     this.updateLoginState = this.updateLoginState.bind(this);
+    this.logoutHandler = this.logoutHandler.bind(this);
     this.loginToggleHandler = this.loginToggleHandler.bind(this);
     this.backdropClickHandler = this.backdropClickHandler.bind(this);
     this.sideDrawerToggleClickHandler = this.sideDrawerToggleClickHandler.bind(
@@ -33,15 +34,11 @@ class App extends React.Component {
   backdropClickHandler() {
     this.setState({ sideDrawerOpen: false });
   }
+
   loginToggleHandler() {
     this.setState(previousState => {
       return { loginOpen: !previousState.loginOpen };
     });
-  }
-
-  loginSideDrawerClickHandler() {
-    this.setState({ sideDrawerOpen: false });
-    this.setState({ loginOpen: true });
   }
 
   updateLoginState() {
@@ -58,9 +55,34 @@ class App extends React.Component {
         })
       );
   }
+
+  // logout function with fetch (POST)
+  logoutHandler() {
+    fetch("/user/logout", {
+      method: "POST"
+    })
+      .then(response => response.text())
+      .then(respone => {
+        // reads the response
+        switch (respone) {
+          // case then "successfully logged out" responded,
+          // run updateLoginState() and then close the side Drawer
+          case "successfully logged out":
+            this.updateLoginState();
+            this.sideDrawerToggleClickHandler();
+            break;
+          // case then something else happens, an error occured or unkown
+          // responds received.
+          default:
+            console.log("Something went wrong with the logout");
+        }
+      });
+  }
+
   componentDidMount() {
     this.updateLoginState();
   }
+
   render() {
     let backdrop;
     let login;
@@ -86,7 +108,10 @@ class App extends React.Component {
           <Toolbar drawerClickHandler={this.sideDrawerToggleClickHandler} />
           <SideDrawer
             show={this.state.sideDrawerOpen}
-            toggleLogin={this.loginToggleHandler}
+            login={this.loginToggleHandler}
+            isLoggedIn={this.state.loggedIn}
+            logout={this.logoutHandler}
+            sideDrawerHandler={this.sideDrawerToggleClickHandler}
           />
 
           {backdrop}
