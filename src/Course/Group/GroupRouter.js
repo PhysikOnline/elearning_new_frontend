@@ -35,12 +35,18 @@ class GroupRouter extends React.Component {
     this.handleLeave = this.handleLeave.bind(this);
     this.setOpenGroup = this.setOpenGroup.bind(this);
     this.getGroups = this.getGroups.bind(this);
+    this.handleAddGroup = this.handleAddGroup.bind(this);
   }
   setOpenGroup(groupName) {
     this.setState({ openGroup: groupName });
   }
   unsetOpenGroup() {
     this.setState({ openGroup: null });
+  }
+  handleAddGroup() {
+    this.setState({
+      openGroup: "New Group Name"
+    });
   }
   /**
    * function to fetch all groups
@@ -191,8 +197,9 @@ class GroupRouter extends React.Component {
           onClick={this.handleJoin}
           disabled={
             this.state.isLoadingGroupChange ||
-            new Date(Date.parse(this.state.currentTimer)) <
-              new Date(Date.parse(this.props.GroupTimer))
+            (new Date(Date.parse(this.state.currentTimer)) <
+              new Date(Date.parse(this.props.GroupTimer)) &&
+              this.props.GroupTimerActive)
           }
         />
       );
@@ -265,9 +272,24 @@ class GroupRouter extends React.Component {
           </label>
 
           <Group
-            Group={this.state.groups.find(
-              group => group.GroupName === this.state.openGroup
-            )}
+            Group={
+              this.state.groups.find(
+                group => group.GroupName === this.state.openGroup
+              )
+                ? this.state.groups.find(
+                    group => group.GroupName === this.state.openGroup
+                  )
+                : {
+                    groupName: "",
+                    AssignedUser: 0,
+                    Tutor: null,
+                    Starttime: "12:00:00",
+                    Endtime: "12:00:00",
+                    Weekday: "Mo",
+                    Maxuser: "15",
+                    Room: ""
+                  }
+            }
             auth={this.props.auth}
             courseSemester={this.props.courseSemester}
             courseName={this.props.courseName}
@@ -313,6 +335,11 @@ class GroupRouter extends React.Component {
 
     return (
       <div className="GroupRouter">
+        <input
+          type="button"
+          value="Neue Gruppe"
+          onClick={this.handleAddGroup}
+        />
         {/* display showGroupAdmin, if it is defined */}
         {showGroupAdmin}
         {/* display displayGroupTimer, if it is defined */}
