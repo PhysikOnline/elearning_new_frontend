@@ -1,6 +1,7 @@
 import React from "react";
 import "./SideDrawer.css";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
 /**
  * Is executed by changing `state` in `App.js`. Then we use basic css
@@ -13,11 +14,56 @@ import PropTypes from "prop-types";
 function SideDrawer(props) {
   return (
     <div className={props.show ? "SideDrawer open" : "SideDrawer"}>
-      <div>hello</div>
-      <button onClick={props.toggleLogin}>Login</button>
+      <div>
+        {!props.isLoggedIn ? (
+          <div className="SideDrawer__welcome__guest">
+            <p>Bitte loggen sie sich ein</p>
+          </div>
+        ) : (
+          <div className="SideDrawer__welcome__user">
+            <p>Willkommen zurück!</p>
+          </div>
+        )}
+      </div>
+
+      <div>
+        {props.isLoggedIn ? (
+          <div className="SideDrawer__myclasses__user">
+            <p>Meine Kurse</p>
+            <currentCourses />
+          </div>
+        ) : (
+          <p></p>
+        )}
+      </div>
+
+      <div>
+        {props.isLoggedIn ? (
+          <div className="SideDrawer__courseoverview__user">
+            <p>
+              <Link to="/course">Kursübersicht</Link>
+            </p>
+          </div>
+        ) : (
+          <p></p>
+        )}
+      </div>
+
+      <div>
+        {!props.isLoggedIn ? (
+          <div class="SideDrawer__LoginButton__guest">
+            <button onClick={props.login}>Login</button>
+          </div>
+        ) : (
+          <div class="SideDrawer__LoginButton__user">
+            <button onClick={props.logout}>Logout</button>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
+
 SideDrawer.propTypes = {
   /**
    * Define the visibility of the SideDrawer
