@@ -29,6 +29,31 @@ class Group extends React.Component {
     this.handleTimeChnage = this.handleTimeChnage.bind(this);
     this.TimeInJavaScriptDate = this.TimeInJavaScriptDate.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
+  }
+  handleDelete(event) {
+    if (window.confirm("Soll die Gruppe wirklich geloescht werden?")) {
+      fetch(
+        "/course/group/deletegroup?Semester=" +
+          this.props.courseSemester +
+          "&CourseName=" +
+          this.props.courseName +
+          "&GroupName=" +
+          this.props.Group.GroupName,
+        {
+          method: "POST"
+        }
+      )
+        .then(response => response.json())
+        .then(responseJSON => {
+          if (responseJSON.error) {
+            alert(JSON.stringify(responseJSON.error));
+          } else if (responseJSON.succsessfull) {
+            this.props.setOpenGroup(undefined);
+          }
+        })
+        .then(this.props.reloadContent);
+    }
   }
   handleChnage(event) {
     let EVENT = event.target;
@@ -79,6 +104,19 @@ class Group extends React.Component {
           ("0" + event.getSeconds()).slice(-2) // update the value of specific key
       }
     }));
+  }
+  componentDidUpdate(previousProps) {
+    if (this.props.Group) {
+      if (
+        JSON.stringify(this.props.Group) !== JSON.stringify(previousProps.Group)
+      ) {
+        console.log("cr", JSON.stringify(this.props.Group));
+        console.log("pv", JSON.stringify(previousProps.Group));
+        this.setState({
+          newGroup: this.props.Group
+        });
+      }
+    }
   }
   handleSubmit() {
     if (!this.state.validity.GroupName && !this.state.validity.Tutor) {
@@ -133,13 +171,10 @@ class Group extends React.Component {
     let submitButton;
     /* render a submit button, if the server description is diffrend from the
     editor description */
-    console.log(JSON.stringify(this.state.newGroup));
-    console.log(JSON.stringify(this.props.Group));
-    console.log(
-      JSON.stringify(this.state.newGroup) !== JSON.stringify(this.props.Group)
-    );
     if (
-      JSON.stringify(this.state.newGroup) !== JSON.stringify(this.props.Group)
+      JSON.stringify(this.state.newGroup) !==
+        JSON.stringify(this.props.Group) &&
+      !isUser
     ) {
       submitButton = (
         /* definig the submit button which appears on text change */
@@ -263,7 +298,11 @@ class Group extends React.Component {
               />
             )}
           </label>
-          {!isUser ? <input type="button" value="Löschen" /> : undefined}
+          {!isUser ? (
+            <input type="button" value="Löschen" onClick={this.handleDelete} />
+          ) : (
+            undefined
+          )}
           {submitButton}
         </div>
       </div>
