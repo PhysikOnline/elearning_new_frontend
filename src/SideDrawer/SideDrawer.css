@@ -14,18 +14,18 @@
 
 .SideDrawer__welcome__guest p {
   text-align: center;
-  border-top-style: solid;
   border-bottom-style: solid;
-  border-width: 1px;
-  background-color: lightgrey;
+  border-width: 3px;
+  background-color: var(--poblue);
+  margin-top: 0;
 }
 
 .SideDrawer__welcome__user p {
   text-align: center;
   border-bottom-style: solid;
-  border-top-style: solid;
-  border-width: 1px;
-  background-color: lightgrey;
+  border-width: 3px;
+  background-color: var(--poblue);
+  margin-top: 0;
 }
 
 .SideDrawer__LoginButton__guest {
@@ -39,9 +39,11 @@
 .SideDrawer__LoginButton__user {
   text-align: center;
   border-top-style: solid;
-  border-bottom-style: solid;
-  border-width: 1px;
-  background-color: lightgrey;
+  border-width: 3px;
+  background-color: var(--poblue);
+  position: absolute;
+  width: 100%;
+  bottom: 0;
 }
 
 .SideDrawer__myclasses__user p {

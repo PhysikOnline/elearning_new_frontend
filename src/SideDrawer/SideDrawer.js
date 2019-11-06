@@ -21,7 +21,7 @@ function SideDrawer(props) {
           </div>
         ) : (
           <div className="SideDrawer__welcome__user">
-            <p>Willkommen zurück!</p>
+            <p>Willkommen zurück, {props.loginDat} !</p>
           </div>
         )}
       </div>
@@ -30,7 +30,6 @@ function SideDrawer(props) {
         {props.isLoggedIn ? (
           <div className="SideDrawer__myclasses__user">
             <p>Meine Kurse</p>
-            <currentCourses />
           </div>
         ) : (
           <p></p>
@@ -41,7 +40,9 @@ function SideDrawer(props) {
         {props.isLoggedIn ? (
           <div className="SideDrawer__courseoverview__user">
             <p>
-              <Link to="/course">Kursübersicht</Link>
+              <Link onClick={props.sideDrawerHandler} to="/course">
+                Kursübersicht
+              </Link>
             </p>
           </div>
         ) : (
@@ -56,7 +57,9 @@ function SideDrawer(props) {
           </div>
         ) : (
           <div class="SideDrawer__LoginButton__user">
-            <button onClick={props.logout}>Logout</button>
+            <Link to="/">
+              <button onClick={props.logout}>Logout</button>
+            </Link>
           </div>
         )}
       </div>
