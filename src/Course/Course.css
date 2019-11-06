@@ -3,6 +3,22 @@
   flex-direction: column;
 }
 
+.Course .header .container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.Course .header .container .join {
+  color: var(--poblue);
+}
+
+.Course .header .container .join:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
 .Course .header p {
   margin: 0;
 }

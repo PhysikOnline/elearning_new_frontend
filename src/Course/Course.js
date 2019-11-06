@@ -31,6 +31,48 @@ class Course extends React.Component {
       courseSemester: decodeURIComponent(this.props.match.params.courseSemester)
     };
     this.getCourseContent = this.getCourseContent.bind(this);
+    this.handleCoureLeave = this.handleCoureLeave.bind(this);
+    this.handleCoureJoin = this.handleCoureJoin.bind(this);
+  }
+  handleCoureJoin() {
+    fetch(
+      "/course/joincourse?Semester=" +
+        this.state.courseSemester +
+        "&CourseName=" +
+        this.state.courseName,
+      {
+        method: "POST"
+      }
+    )
+      // parse the course content to json
+      .then(response => response.json())
+      .then(responseJSON => {
+        if (responseJSON.error) {
+          alert(JSON.stringify(responseJSON.error));
+        } else if (responseJSON.succsessfull) {
+          this.getCourseContent();
+        }
+      });
+  }
+  handleCoureLeave() {
+    fetch(
+      "/course/leavecourse?Semester=" +
+        this.state.courseSemester +
+        "&CourseName=" +
+        this.state.courseName,
+      {
+        method: "POST"
+      }
+    )
+      // parse the course content to json
+      .then(response => response.json())
+      .then(responseJSON => {
+        if (responseJSON.error) {
+          alert(JSON.stringify(responseJSON.error));
+        } else if (responseJSON.succsessfull) {
+          this.getCourseContent();
+        }
+      });
   }
   /**
    * fetch the course content, and store it into the state, this will trigger
@@ -131,11 +173,35 @@ class Course extends React.Component {
         </TabPanel>
       );
     }
+
+    // course join text
+    let courseJoin;
+    if (this.state.course.auth.length === 0 && this.props.login) {
+      courseJoin = (
+        <p className="join" onClick={this.handleCoureJoin}>
+          beitreten
+        </p>
+      );
+    } else if (
+      !this.state.course.auth.includes("admin") &&
+      !this.state.course.auth.includes("tutor") &&
+      this.state.course.auth.includes("user") &&
+      this.props.login
+    ) {
+      courseJoin = (
+        <p className="join" onClick={this.handleCoureLeave}>
+          verlassen
+        </p>
+      );
+    }
     return (
       <div className="Course">
         {/* create a header for the course */}
         <div className="header">
-          <p>{this.state.course.Semester}</p>
+          <div className="container">
+            <p>{this.state.course.Semester}</p>
+            {courseJoin}
+          </div>
           <h1>{this.state.course.Name}</h1>
         </div>
         <Tabs>
