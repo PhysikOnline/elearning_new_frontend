@@ -21,9 +21,15 @@ function Footer() {
         </div>{" "}
         by PhysikOnline
       </div>
-      <div>
-        <a href="/impressum">Impressum</a>
-        <a href="/datenschutz">Datenschutz</a>
+      <div className="footer__links">
+        <ul>
+          <li>
+            <a href="/impressum">Impressum</a>
+          </li>
+          <li>
+            <a href="/datenschutz">Datenschutz</a>
+          </li>
+        </ul>
       </div>
     </footer>
   );

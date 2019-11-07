@@ -19,6 +19,7 @@ class App extends React.Component {
       loggedIn: false
     };
     this.updateLoginState = this.updateLoginState.bind(this);
+    this.logoutHandler = this.logoutHandler.bind(this);
     this.loginToggleHandler = this.loginToggleHandler.bind(this);
     this.backdropClickHandler = this.backdropClickHandler.bind(this);
     this.sideDrawerToggleClickHandler = this.sideDrawerToggleClickHandler.bind(
@@ -33,11 +34,13 @@ class App extends React.Component {
   backdropClickHandler() {
     this.setState({ sideDrawerOpen: false });
   }
+
   loginToggleHandler() {
     this.setState(previousState => {
       return { loginOpen: !previousState.loginOpen };
     });
   }
+
   updateLoginState() {
     fetch("/user/checklogin", {
       method: "GET"
@@ -52,9 +55,34 @@ class App extends React.Component {
         })
       );
   }
+
+  // logout function with fetch (POST)
+  logoutHandler() {
+    fetch("/user/logout", {
+      method: "POST"
+    })
+      .then(response => response.text())
+      .then(respone => {
+        // reads the response
+        switch (respone) {
+          // case then "successfully logged out" responded,
+          // run updateLoginState() and then close the side Drawer
+          case "successfully logged out":
+            this.updateLoginState();
+            this.sideDrawerToggleClickHandler();
+            break;
+          // case then something else happens, an error occured or unkown
+          // responds received.
+          default:
+            console.log("Something went wrong with the logout");
+        }
+      });
+  }
+
   componentDidMount() {
     this.updateLoginState();
   }
+
   render() {
     let backdrop;
     let login;
@@ -74,12 +102,23 @@ class App extends React.Component {
 
     return (
       <div className="App">
-        <Toolbar drawerClickHandler={this.sideDrawerToggleClickHandler} />
-        <SideDrawer show={this.state.sideDrawerOpen} />
-        {backdrop}
-        {login}
-        <div className="positioning">
-          <Router>
+        {/* every content has to be in the router, this make other links or switches
+        in other components work */}
+        <Router>
+          <Toolbar drawerClickHandler={this.sideDrawerToggleClickHandler} />
+          <SideDrawer
+            show={this.state.sideDrawerOpen}
+            login={this.loginToggleHandler}
+            isLoggedIn={this.state.loggedIn}
+            logout={this.logoutHandler}
+            sideDrawerHandler={this.sideDrawerToggleClickHandler}
+          />
+
+          {backdrop}
+
+          {login}
+
+          <div className="positioning">
             <div>
               {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
@@ -98,10 +137,8 @@ class App extends React.Component {
                 </Route>
               </Switch>
             </div>
-          </Router>
-
-          <button onClick={this.loginToggleHandler}>Login</button>
-        </div>
+          </div>
+        </Router>
       </div>
     );
   }

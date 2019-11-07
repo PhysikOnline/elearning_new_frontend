@@ -8,6 +8,7 @@
   background-color: var(--poblue);
   color: white;
   align-items: center;
+  z-index: 50;
 }
 
 @media (min-width: 1025px) {
@@ -15,7 +16,9 @@
   .Toolbar {
     height: 80px;
   }
-  .Toolbar h1 {
+  .Toolbar a {
+    color: white;
+    text-decoration: none;
     font-size: 30px;
   }
   .Toolbar .IconMenu {
@@ -29,7 +32,9 @@
   .Toolbar {
     height: 50px;
   }
-  .Toolbar h1 {
+  .Toolbar a {
+    color: white;
+    text-decoration: none;
     font-size: 20px;
   }
   .Toolbar .IconMenu {

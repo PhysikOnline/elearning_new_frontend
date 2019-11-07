@@ -33,6 +33,28 @@
   animation-iteration-count: infinite;
 }
 
+.footer__links ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+
+.footer__links li {
+  padding: 0 0.5rem;
+  margin-bottom: 7.5px;
+}
+
+.footer__links a {
+  color: white;
+  text-decoration: none;
+}
+
+.footer__links a:hover,
+.footer__links a:active {
+  color: black;
+}
+
 @-webkit-keyframes heart {
   0% {
     height: 80%;

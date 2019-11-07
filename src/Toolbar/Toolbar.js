@@ -3,6 +3,8 @@ import "./Toolbar.css";
 import PropTypes from "prop-types";
 import IconMenu from "../static/IconMenu.js";
 
+import { Link } from "react-router-dom";
+
 /**
  * It is a basic toolbar. Exept of showing the user wich application they are
  * currently using, it enables to expand the SideDrawer. It executes a function on
@@ -29,8 +31,8 @@ function Toolbar(props) {
       <div onClick={props.drawerClickHandler}>
         <IconMenu />
       </div>
-      {/* write in our app name :)  */}
-      <h1>E-Learning</h1>
+      {/* Link to the hompage see react-router-dom */}
+      <Link to="/">E-Learning</Link>
     </div>
   );
 }

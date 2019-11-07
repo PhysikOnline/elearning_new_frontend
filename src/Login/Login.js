@@ -7,7 +7,7 @@ import IconClose from "../static/IconClose";
 /**
  * This Login sends the username and password to the Server. Where
  * it will be verified an returns a cookie with a session id.
- * After a succsessfull login, it executes a function of `App.js`
+ * After a successfull login, it executes a function of `App.js`
  * where it updates the login state. This login state will be
  * passed to every component, which uses the login functionality..
  *
@@ -57,7 +57,7 @@ class Login extends React.Component {
       // process the response
       .then(response => {
         switch (response) {
-          case "Login sucsessfull":
+          case "Login successfull":
             // update the login state of the App.js component
             this.props.updateLoginState();
             // close the login component by setting the state in App.js
