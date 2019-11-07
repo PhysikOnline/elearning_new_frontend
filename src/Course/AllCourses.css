@@ -1,0 +1,52 @@
+/* .Name {
+  margin-left: 30px;
+} */
+
+@media (min-width: 1025px) {
+  /* breite Browserfenster */
+
+  .AllCourses .courseName {
+    font-size: 20px;
+    list-style-type: none;
+    margin-bottom: 1px;
+    line-height: 1.5;
+    background-color: #eaeaea;
+    padding: 0.5% 1% 1% 1%;
+  }
+  .AllCourses .courseSemester {
+    font-size: 30px;
+    font-style: bold;
+    margin-top: 15px;
+    line-height: 1.4;
+    /* border-bottom: 20px, solid; */
+    /* text-decoration: underline overline;  */
+    border-bottom: 1px solid #005eaa;
+    /* width: 100%; */
+    /* display: block; */
+    background-color: #fafafa;
+    padding: 0px 0px 0px 1%;
+  }
+}
+
+@media (max-width: 1024px) {
+  /* mobile Geräte */
+  .AllCourses .courseName {
+    font-size: 20px;
+
+    margin-bottom: 1px;
+    line-height: 1.5;
+    background-color: #eaeaea;
+    padding: 0.5% 1% 1% 1%;
+  }
+  .AllCourses .courseSemester {
+    font-size: 25px;
+    font-style: bold;
+    margin-top: 15px;
+    line-height: 1.4;
+    border-bottom: 1px solid #005eaa;
+    /* width: 100%; */
+    /* display: block; */
+    background-color: #fafafa;
+    padding: 0px 0px 0px 1%;
+  }
+}

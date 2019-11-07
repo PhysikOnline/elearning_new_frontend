@@ -1,6 +1,7 @@
 import React from "react";
 import { Switch, Route, useRouteMatch } from "react-router-dom";
 import "./CourseRouter.css";
+import AllCourses from "./AllCourses";
 
 import Course from "./Course";
 
@@ -14,7 +15,7 @@ function CourseRouter(props) {
           render={path => <Course {...path} login={props.login} />}
         />
         <Route path={match.path}>
-          <h3>Here should be a overview over all courses</h3>
+          <AllCourses />
         </Route>
       </Switch>
     </div>
