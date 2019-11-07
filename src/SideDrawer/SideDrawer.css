@@ -12,6 +12,66 @@
   transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
 }
 
+.SideDrawer__welcome__guest p {
+  text-align: center;
+  border-bottom-style: solid;
+  border-width: 3px;
+  background-color: var(--poblue);
+  margin-top: 0;
+}
+
+.SideDrawer__welcome__user p {
+  text-align: center;
+  border-bottom-style: solid;
+  border-width: 3px;
+  background-color: var(--poblue);
+  margin-top: 0;
+}
+
+.SideDrawer__LoginButton__guest {
+  text-align: center;
+  border-top-style: solid;
+  border-bottom-style: solid;
+  border-width: 1px;
+  background-color: lightgrey;
+}
+
+.SideDrawer__LoginButton__user {
+  text-align: center;
+  border-top-style: solid;
+  border-width: 3px;
+  background-color: var(--poblue);
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+}
+
+.SideDrawer__myclasses__user p {
+  text-align: center;
+  border-bottom-style: solid;
+  border-top-style: solid;
+  border-width: 1px;
+  background-color: lightgrey;
+}
+
+.SideDrawer__courseoverview__user p {
+  text-align: center;
+  border-bottom-style: solid;
+  border-top-style: solid;
+  border-width: 1px;
+  background-color: lightgrey;
+}
+
+.SideDrawer__courseoverview__user a {
+  color: black;
+  text-decoration: none;
+}
+
+.SideDrawer__courseoverview__user a:hover,
+.SideDrawer__courseoverview__user a:active {
+  color: var(--poblue);
+}
+
 .SideDrawer.open {
   box-shadow: 1px 0px 7px rgb(0, 0, 0, 0.5);
   transform: translateX(0);
