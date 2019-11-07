@@ -52,11 +52,11 @@ function SideDrawer(props) {
 
       <div>
         {!props.isLoggedIn ? (
-          <div class="SideDrawer__LoginButton__guest">
+          <div className="SideDrawer__LoginButton__guest">
             <button onClick={props.login}>Login</button>
           </div>
         ) : (
-          <div class="SideDrawer__LoginButton__user">
+          <div className="SideDrawer__LoginButton__user">
             <Link to="/">
               <button onClick={props.logout}>Logout</button>
             </Link>
