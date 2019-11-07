@@ -8,6 +8,7 @@ import Error from "../Additional/Error";
 import Settings from "./Settings";
 import Overview from "./Overview";
 import GroupRouter from "./Group/GroupRouter";
+import PDF from "./PDF";
 
 /**
  * Main Course displayin Component, we fetch the cours information here and pass
@@ -131,6 +132,22 @@ class Course extends React.Component {
       return <Error error={this.state.course.error} />;
     }
 
+    // initialize values for the course tab pdf
+    let tabListPDF;
+    let tabPanelPDF;
+    // display PDF tab, if user is user of group
+    if (this.state.course.auth.includes("user")) {
+      tabListPDF = <Tab>PDF</Tab>;
+      tabPanelPDF = (
+        <TabPanel>
+          <PDF
+            courseSemester={this.state.courseSemester}
+            courseName={this.state.courseName}
+          />
+        </TabPanel>
+      );
+    }
+
     // initialize values for the course tab settings
     let tabListSetting;
     let tabPanelSetting;
@@ -211,6 +228,7 @@ class Course extends React.Component {
             {/* display groups if tabListGroup is defined */}
             {tabListGroup}
             {/* display the settings if tabListSetting is defined */}
+            {tabListPDF}
             {tabListSetting}
           </TabList>
 
@@ -227,6 +245,7 @@ class Course extends React.Component {
           {/* display a Group panel, if tabPanelGroup is defined */}
           {tabPanelGroup}
           {/* display a Setting panel, if tabPanelSetting is defined */}
+          {tabPanelPDF}
           {tabPanelSetting}
         </Tabs>
       </div>
