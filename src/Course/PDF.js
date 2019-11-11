@@ -26,7 +26,6 @@ class Course extends React.Component {
       .then(res => res.blob())
       .then(response => {
         //Create a Blob from the PDF Stream
-        console.log(response);
         const file = new Blob([response], {
           type: "application/pdf"
         });
@@ -38,30 +37,30 @@ class Course extends React.Component {
         // window.open(fileURL, "your filename.extension");
 
         // create <a> tag dinamically
-        // var fileLink = document.createElement("a");
-        // fileLink.href = fileURL;
+        var fileLink = document.createElement("a");
+        fileLink.href = fileURL;
 
         // it forces the name of the downloaded file
-        // fileLink.target = "_blank";
-        // fileLink.download = "pdf_name";
+        fileLink.target = "_blank";
+        fileLink.download = "pdf_name";
 
         // triggers the click event
-        // fileLink.click();
+        fileLink.click();
 
-        let win = window.open("", "height=300, width=300");
-        let iframe = document.createElement("iframe");
-        let title = document.createElement("title");
+        // let win = window.open("", "height=300, width=300");
+        // let iframe = document.createElement("iframe");
+        // let title = document.createElement("title");
 
-        title.appendChild(document.createTextNode("Nice title :)"));
+        // title.appendChild(document.createTextNode("Nice title :)"));
 
-        iframe.src = fileURL;
-        iframe.width = "100%";
-        iframe.height = "100%";
-        iframe.style.border = "none";
+        // iframe.src = fileURL;
+        // iframe.width = "100%";
+        // iframe.height = "100%";
+        // iframe.style.border = "none";
 
-        win.document.head.appendChild(title);
-        win.document.body.appendChild(iframe);
-        win.document.body.style.margin = 0;
+        // win.document.head.appendChild(title);
+        // win.document.body.appendChild(iframe);
+        // win.document.body.style.margin = 0;
         // console.log("hello");
         // setTimeout(() => (newWindow.document.title = "New Title"), 2000);
         // newWindow.addEventListener("load", function() {

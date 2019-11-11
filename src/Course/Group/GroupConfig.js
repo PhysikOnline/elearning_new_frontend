@@ -28,7 +28,7 @@ class GroupConfig extends React.Component {
   setGroupTimer(event) {
     // convert date to mysql time
     let date = event
-      .toLocaleString()
+      .toLocaleString("de-DE")
       .replace(",", "")
       .split(" ");
     date[0] = date[0]

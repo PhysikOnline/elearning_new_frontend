@@ -110,8 +110,6 @@ class Group extends React.Component {
       if (
         JSON.stringify(this.props.Group) !== JSON.stringify(previousProps.Group)
       ) {
-        console.log("cr", JSON.stringify(this.props.Group));
-        console.log("pv", JSON.stringify(previousProps.Group));
         this.setState({
           newGroup: this.props.Group
         });
