@@ -29,11 +29,16 @@ class Course extends React.Component {
       // decode the url course name to normal readable string
       courseName: decodeURIComponent(this.props.match.params.courseName),
       // decoude the course semester to normal readable string
-      courseSemester: decodeURIComponent(this.props.match.params.courseSemester)
+      courseSemester: decodeURIComponent(
+        this.props.match.params.courseSemester
+      ),
+      pdfFilenames: [],
+      isLoadingPDF: true
     };
     this.getCourseContent = this.getCourseContent.bind(this);
     this.handleCoureLeave = this.handleCoureLeave.bind(this);
     this.handleCoureJoin = this.handleCoureJoin.bind(this);
+    this.getPdfFilenames = this.getPdfFilenames.bind(this);
   }
   handleCoureJoin() {
     fetch(
@@ -108,21 +113,45 @@ class Course extends React.Component {
         });
       });
   }
+  getPdfFilenames() {
+    fetch(
+      "/course/filenames?Semester=" +
+        this.state.courseSemester +
+        "&Name=" +
+        this.state.courseName,
+      {
+        method: "GET"
+      }
+    )
+      .then(res => res.json())
+      .then(responseJSON => {
+        this.setState(previousState => {
+          if (
+            JSON.stringify(previousState.pdfFilenames) !==
+            JSON.stringify(responseJSON)
+          ) {
+            return { pdfFilenames: responseJSON, isLoadingPDF: false };
+          }
+        });
+      });
+  }
   /**
    * function for getting the course content on mount
    */
   componentDidMount() {
     this.getCourseContent();
+    this.getPdfFilenames();
   }
   /**
    * funnction for refreshing the course content on update
    */
   componentDidUpdate() {
     this.getCourseContent();
+    this.getPdfFilenames();
   }
   render() {
     // display a loading page, if isLoading is true
-    if (this.state.isLoading) {
+    if (this.state.isLoading || this.state.isLoadingPDF) {
       return <Loading />;
     }
     /* display an error if there is an error stored in this.state.course.
@@ -136,13 +165,23 @@ class Course extends React.Component {
     let tabListPDF;
     let tabPanelPDF;
     // display PDF tab, if user is user of group
-    if (this.state.course.auth.includes("user")) {
+    // console.log(this.state.pdfFilenames);
+    if (
+      (this.state.course.auth.includes("user") &&
+        (this.state.pdfFilenames.exercise.length !== 0 ||
+          this.state.pdfFilenames.script.length !== 0)) ||
+      this.state.course.auth.includes("admin")
+    ) {
       tabListPDF = <Tab>PDF</Tab>;
       tabPanelPDF = (
         <TabPanel>
           <PDF
             courseSemester={this.state.courseSemester}
             courseName={this.state.courseName}
+            auth={this.state.course.auth}
+            pdfFilenames={this.state.pdfFilenames}
+            // isLoading={this.state.isLoadingPDF}
+            getPdfFilenames={this.getPdfFilenames}
           />
         </TabPanel>
       );

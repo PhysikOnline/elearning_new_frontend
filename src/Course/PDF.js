@@ -2,7 +2,7 @@ import React from "react";
 import "./PDF.css";
 // import PropTypes from "prop-types";
 
-import Loading from "../Additional/Loading";
+// import Loading from "../Additional/Loading";
 import IconClose from "../static/IconClose";
 import IconAdd from "../static/IconAdd";
 
@@ -17,35 +17,14 @@ import IconAdd from "../static/IconAdd";
 class Course extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      pdfFilenames: [],
-      isLoading: true
-    };
+    // this.state = {
+    // };
     this.handlePDFDownload = this.handlePDFDownload.bind(this);
-    this.getPdfFilenames = this.getPdfFilenames.bind(this);
     this.displayPDFCategory = this.displayPDFCategory.bind(this);
     this.handlePDFDeletion = this.handlePDFDeletion.bind(this);
     this.handleFileUpload = this.handleFileUpload.bind(this);
   }
-  getPdfFilenames() {
-    fetch(
-      "/course/filenames?Semester=" +
-        this.props.courseSemester +
-        "&Name=" +
-        this.props.courseName,
-      {
-        method: "GET"
-      }
-    )
-      .then(res => res.json())
-      .then(responseJSON =>
-        this.setState(previousState => {
-          if (JSON.stringify(previousState) !== JSON.stringify(responseJSON)) {
-            return { pdfFilenames: responseJSON, isLoading: false };
-          }
-        })
-      );
-  }
+
   handlePDFDownload(name, subfolder) {
     fetch(
       "/course/pdf?Semester=" +
@@ -106,28 +85,27 @@ class Course extends React.Component {
         if (response.error) {
           alert(response.error);
         } else if (response.succsessfull) {
-          this.getPdfFilenames();
+          this.props.getPdfFilenames();
         }
       })
       .catch(error => {
         console.log(error);
       });
   }
-  handleFileUpload(event, subfolder) {
+  handleFileUpload(event, sub) {
     // console.log(event.target.files[0]);
     let reader = new FormData();
     let courseSemester = this.props.courseSemester;
     let courseName = this.props.courseName;
 
     reader.append("file", event.target.files[0]);
-
     fetch(
       "/course/pdf?Semester=" +
         courseSemester +
         "&Name=" +
         courseName +
         "&subfolder=" +
-        subfolder,
+        sub,
       {
         method: "POST",
         "Content-Type": "application/json; charset=utf-8",
@@ -139,7 +117,7 @@ class Course extends React.Component {
         if (responseJSON.error) {
           alert(JSON.stringify(responseJSON.error));
         } else if (responseJSON.succsessfull) {
-          this.getPdfFilenames();
+          this.props.getPdfFilenames();
         }
       });
     // reader.onload = function() {
@@ -152,23 +130,31 @@ class Course extends React.Component {
     // };
   }
   displayPDFCategory(Title, pdfFiles) {
-    let subfolder = Title === "Skript" ? "script" : "exercise";
+    const subfolder = Title === "Skript" ? "script" : "exercise";
+    let addButton;
+    if (this.props.auth.includes("admin")) {
+      addButton = (
+        <div className="pdf-upload">
+          <label htmlFor={"file-input-" + subfolder}>
+            <IconAdd />
+          </label>
+          <input
+            id={"file-input-" + subfolder}
+            name={subfolder}
+            type="file"
+            accept=".pdf"
+            onChange={event => {
+              this.handleFileUpload(event, subfolder);
+            }}
+          />
+        </div>
+      );
+    }
     return (
       <div className="contentBlock">
         <div className="File title">
           <div>{Title}</div>
-          <div className="pdf-upload">
-            <label htmlFor="file-input">
-              <IconAdd />
-            </label>
-            <input
-              id="file-input"
-              name="file"
-              type="file"
-              accept=".pdf"
-              onChange={event => this.handleFileUpload(event, subfolder)}
-            />
-          </div>
+          {addButton}
         </div>
         {pdfFiles.map(x => (
           <div className="File" key={x}>
@@ -178,41 +164,50 @@ class Course extends React.Component {
             >
               {x}
             </div>
-            <div onClick={() => this.handlePDFDeletion(x, subfolder)}>
-              <IconClose />
-            </div>
+            {this.props.auth.includes("admin") ? (
+              <div onClick={() => this.handlePDFDeletion(x, subfolder)}>
+                <IconClose />
+              </div>
+            ) : (
+              undefined
+            )}
           </div>
         ))}
       </div>
     );
   }
   componentDidMount() {
-    this.getPdfFilenames();
+    this.props.getPdfFilenames();
   }
   render() {
     // display a loading page, if isLoading is true
-    if (this.state.isLoading) {
-      return <Loading />;
-    }
+    // if (this.props.isLoading) {
+    //   return <Loading />;
+    // }
     /* display an error if there is an error stored in this.state.course.
     the error object is usually created in the backend and this.getCourseContent
     stores the error in the this.state instead of the course. */
     // if (this.state.course.error) {
     //   return <Error error={this.state.course.error} />;
     // }
+
     let displayScript;
     let displayExercise;
-    if (this.state.pdfFilenames.script) {
+    if (this.props.pdfFilenames.script.length !== 0) {
       displayScript = this.displayPDFCategory(
         "Skript",
-        this.state.pdfFilenames.script
+        this.props.pdfFilenames.script
       );
+    } else if (this.props.auth.includes("admin")) {
+      displayScript = this.displayPDFCategory("Skript", []);
     }
-    if (this.state.pdfFilenames.exercise) {
+    if (this.props.pdfFilenames.exercise.length !== 0) {
       displayExercise = this.displayPDFCategory(
         "Aufgaben",
-        this.state.pdfFilenames.exercise
+        this.props.pdfFilenames.exercise
       );
+    } else if (this.props.auth.includes("admin")) {
+      displayExercise = this.displayPDFCategory("Aufgaben", []);
     }
     return (
       <div className="PDF">
