@@ -114,26 +114,36 @@ class Course extends React.Component {
       });
   }
   getPdfFilenames() {
-    fetch(
-      "/course/filenames?Semester=" +
-        this.state.courseSemester +
-        "&Name=" +
-        this.state.courseName,
-      {
-        method: "GET"
-      }
-    )
-      .then(res => res.json())
-      .then(responseJSON => {
+    if (!this.state.isLoading) {
+      if (this.state.course.auth.includes("user")) {
+        fetch(
+          "/course/filenames?Semester=" +
+            this.state.courseSemester +
+            "&Name=" +
+            this.state.courseName,
+          {
+            method: "GET"
+          }
+        )
+          .then(res => res.json())
+          .then(responseJSON => {
+            this.setState(previousState => {
+              if (
+                JSON.stringify(previousState.pdfFilenames) !==
+                JSON.stringify(responseJSON)
+              ) {
+                return { pdfFilenames: responseJSON, isLoadingPDF: false };
+              }
+            });
+          });
+      } else {
         this.setState(previousState => {
-          if (
-            JSON.stringify(previousState.pdfFilenames) !==
-            JSON.stringify(responseJSON)
-          ) {
-            return { pdfFilenames: responseJSON, isLoadingPDF: false };
+          if (previousState.isLoadingPDF === true) {
+            return { isLoadingPDF: false };
           }
         });
-      });
+      }
+    }
   }
   /**
    * function for getting the course content on mount
