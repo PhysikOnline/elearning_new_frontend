@@ -32,7 +32,7 @@ class Course extends React.Component {
       courseSemester: decodeURIComponent(
         this.props.match.params.courseSemester
       ),
-      pdfFilenames: [],
+      pdfFilenames: { script: [], exercise: [] },
       isLoadingPDF: true
     };
     this.getCourseContent = this.getCourseContent.bind(this);
