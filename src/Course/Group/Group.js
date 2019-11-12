@@ -30,6 +30,43 @@ class Group extends React.Component {
     this.TimeInJavaScriptDate = this.TimeInJavaScriptDate.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
+    this.handleCSVdownload = this.handleCSVdownload.bind(this);
+  }
+  handleCSVdownload() {
+    fetch(
+      "/course/group/groupcsv?Semester=" +
+        this.props.courseSemester +
+        "&CourseName=" +
+        this.props.courseName +
+        "&GroupName=" +
+        this.props.Group.GroupName,
+      {
+        method: "GET"
+      }
+    )
+      .then(res => res.blob())
+      .then(response => {
+        //Create a Blob from the PDF Stream
+        const file = new Blob([response], {
+          // type: "application/pdf"
+        });
+        //Build a URL from the file
+        let fileURL = URL.createObjectURL(file);
+
+        // create <a> tag dinamically
+        var fileLink = document.createElement("a");
+        fileLink.href = fileURL;
+
+        // it forces the name of the downloaded file
+        fileLink.target = "_blank";
+        fileLink.download = this.props.Group.GroupName + ".csv";
+
+        // triggers the click event
+        fileLink.click();
+      })
+      .catch(error => {
+        console.log(error);
+      });
   }
   handleDelete(event) {
     if (window.confirm("Soll die Gruppe wirklich geloescht werden?")) {
@@ -298,6 +335,15 @@ class Group extends React.Component {
           </label>
           {!isUser ? (
             <input type="button" value="Löschen" onClick={this.handleDelete} />
+          ) : (
+            undefined
+          )}
+          {this.props.auth.includes("tutor") ? (
+            <input
+              type="button"
+              onClick={this.handleCSVdownload}
+              value="Nutzer CSV"
+            />
           ) : (
             undefined
           )}
