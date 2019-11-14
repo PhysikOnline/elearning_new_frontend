@@ -44,7 +44,7 @@ class Login extends React.Component {
     event.preventDefault();
     // get request to server on /user/login
     fetch(
-      "/user/login?username=" +
+      "/api/user/login?username=" +
         this.state.username +
         "&password=" +
         this.state.password,

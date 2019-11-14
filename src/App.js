@@ -42,7 +42,7 @@ class App extends React.Component {
   }
 
   updateLoginState() {
-    fetch("/user/checklogin", {
+    fetch("/api/user/checklogin", {
       method: "GET"
     })
       .then(response => response.text())
@@ -58,7 +58,7 @@ class App extends React.Component {
 
   // logout function with fetch (POST)
   logoutHandler() {
-    fetch("/user/logout", {
+    fetch("/api/user/logout", {
       method: "POST"
     })
       .then(response => response.text())

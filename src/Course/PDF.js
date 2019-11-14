@@ -27,7 +27,7 @@ class Course extends React.Component {
 
   handlePDFDownload(name, subfolder) {
     fetch(
-      "/course/pdf?Semester=" +
+      "/api/course/pdf?Semester=" +
         this.props.courseSemester +
         "&Name=" +
         this.props.courseName +
@@ -68,7 +68,7 @@ class Course extends React.Component {
   }
   handlePDFDeletion(name, subfolder) {
     fetch(
-      "/course/pdf?Semester=" +
+      "/api/course/pdf?Semester=" +
         this.props.courseSemester +
         "&Name=" +
         this.props.courseName +
@@ -100,7 +100,7 @@ class Course extends React.Component {
 
     reader.append("file", event.target.files[0]);
     fetch(
-      "/course/pdf?Semester=" +
+      "/api/course/pdf?Semester=" +
         courseSemester +
         "&Name=" +
         courseName +

@@ -34,7 +34,7 @@ class Group extends React.Component {
   }
   handleCSVdownload() {
     fetch(
-      "/course/group/groupcsv?Semester=" +
+      "/api/course/group/groupcsv?Semester=" +
         this.props.courseSemester +
         "&CourseName=" +
         this.props.courseName +
@@ -71,7 +71,7 @@ class Group extends React.Component {
   handleDelete(event) {
     if (window.confirm("Soll die Gruppe wirklich geloescht werden?")) {
       fetch(
-        "/course/group/deletegroup?Semester=" +
+        "/api/course/group/deletegroup?Semester=" +
           this.props.courseSemester +
           "&CourseName=" +
           this.props.courseName +
@@ -156,7 +156,7 @@ class Group extends React.Component {
   handleSubmit() {
     if (!this.state.validity.GroupName && !this.state.validity.Tutor) {
       fetch(
-        "/course/group/insertorupdategroup?Semester=" +
+        "/api/course/group/insertorupdategroup?Semester=" +
           this.props.courseSemester +
           "&CourseName=" +
           this.props.courseName +

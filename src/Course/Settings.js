@@ -13,7 +13,7 @@ class Settings extends React.Component {
   }
   handleCSVdownload() {
     fetch(
-      "/course/coursecsv?Semester=" +
+      "/api/course/coursecsv?Semester=" +
         this.props.courseSemester +
         "&CourseName=" +
         this.props.courseName,

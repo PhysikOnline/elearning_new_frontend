@@ -42,7 +42,7 @@ class Course extends React.Component {
   }
   handleCoureJoin() {
     fetch(
-      "/course/joincourse?Semester=" +
+      "/api/course/joincourse?Semester=" +
         this.state.courseSemester +
         "&CourseName=" +
         this.state.courseName,
@@ -62,7 +62,7 @@ class Course extends React.Component {
   }
   handleCoureLeave() {
     fetch(
-      "/course/leavecourse?Semester=" +
+      "/api/course/leavecourse?Semester=" +
         this.state.courseSemester +
         "&CourseName=" +
         this.state.courseName,
@@ -87,7 +87,7 @@ class Course extends React.Component {
   getCourseContent() {
     // fetching course content
     fetch(
-      "/course/coursecontent?Semester=" +
+      "/api/course/coursecontent?Semester=" +
         this.state.courseSemester +
         "&Name=" +
         this.state.courseName,
@@ -117,7 +117,7 @@ class Course extends React.Component {
     if (!this.state.isLoading) {
       if (this.state.course.auth.includes("user")) {
         fetch(
-          "/course/filenames?Semester=" +
+          "/api/course/filenames?Semester=" +
             this.state.courseSemester +
             "&Name=" +
             this.state.courseName,
