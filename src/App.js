@@ -1,6 +1,5 @@
 import React from "react";
 import "./App.css";
-
 import Toolbar from "./Toolbar/Toolbar";
 import SideDrawer from "./SideDrawer/SideDrawer";
 import Backdrop from "./Backdrop/Backdrop";
@@ -22,6 +21,7 @@ class App extends React.Component {
     this.logoutHandler = this.logoutHandler.bind(this);
     this.loginToggleHandler = this.loginToggleHandler.bind(this);
     this.backdropClickHandler = this.backdropClickHandler.bind(this);
+    this.getCurrentCourses = this.getCurrentCourses.bind(this);
     this.sideDrawerToggleClickHandler = this.sideDrawerToggleClickHandler.bind(
       this
     );
@@ -41,8 +41,28 @@ class App extends React.Component {
     });
   }
 
+  getCurrentCourses() {
+    fetch("/user/currentcourses", { method: "GET" })
+      .then(response => response.json())
+      .then(currentCourseResponse => {
+        // save the fetched course content into the state
+        this.setState(previousState => {
+          /* for an object comparison, we need to use JSON.stringify, otherwise
+        it will be always false */
+          if (
+            JSON.stringify(previousState.course) !==
+            JSON.stringify(currentCourseResponse)
+          ) {
+            /* save the content and set isLoading to false to remove the 
+          loading page */
+            return { currentCourse: currentCourseResponse, isLoading: false };
+          }
+        });
+      });
+  }
+
   updateLoginState() {
-    fetch("/user/checklogin", {
+    fetch("/api/user/checklogin", {
       method: "GET"
     })
       .then(response => response.text())
@@ -58,7 +78,7 @@ class App extends React.Component {
 
   // logout function with fetch (POST)
   logoutHandler() {
-    fetch("/user/logout", {
+    fetch("/api/user/logout", {
       method: "POST"
     })
       .then(response => response.text())

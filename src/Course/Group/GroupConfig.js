@@ -28,7 +28,7 @@ class GroupConfig extends React.Component {
   setGroupTimer(event) {
     // convert date to mysql time
     let date = event
-      .toLocaleString()
+      .toLocaleString("de-DE")
       .replace(",", "")
       .split(" ");
     date[0] = date[0]
@@ -38,7 +38,7 @@ class GroupConfig extends React.Component {
     date = date.join(" ");
     // post data to backend
     fetch(
-      "/course/group/grouptimer?Semester=" +
+      "/api/course/group/grouptimer?Semester=" +
         this.props.courseSemester +
         "&Name=" +
         this.props.courseName +
@@ -58,7 +58,7 @@ class GroupConfig extends React.Component {
   handleGroupVisibility() {
     // POST data
     fetch(
-      "/course/group/togglegroupvisibility?Semester=" +
+      "/api/course/group/togglegroupvisibility?Semester=" +
         this.props.courseSemester +
         "&Name=" +
         this.props.courseName,
@@ -75,7 +75,7 @@ class GroupConfig extends React.Component {
    */
   handleGroupTimerActive() {
     fetch(
-      "/course/group/togglegrouptimeractive?Semester=" +
+      "/api/course/group/togglegrouptimeractive?Semester=" +
         this.props.courseSemester +
         "&Name=" +
         this.props.courseName,

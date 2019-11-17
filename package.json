@@ -1,6 +1,7 @@
 {
   "name": "elearning-frontend",
   "version": "0.1.0",
+  "homepage": "http://localhost/",
   "private": true,
   "dependencies": {
     "@ckeditor/ckeditor5-build-balloon": "^12.4.0",

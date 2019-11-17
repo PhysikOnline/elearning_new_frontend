@@ -1,7 +1,6 @@
 import React from "react";
 import "./Login.css";
 import PropTypes from "prop-types";
-
 import IconClose from "../static/IconClose";
 
 /**
@@ -44,7 +43,7 @@ class Login extends React.Component {
     event.preventDefault();
     // get request to server on /user/login
     fetch(
-      "/user/login?username=" +
+      "/api/user/login?username=" +
         this.state.username +
         "&password=" +
         this.state.password,

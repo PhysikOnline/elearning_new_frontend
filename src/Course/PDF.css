@@ -1,0 +1,67 @@
+.PDF .contentBlock {
+  margin: 4px;
+}
+
+.PDF .title {
+  border-bottom: 1px solid black;
+  padding: 2px;
+  padding-left: 7px;
+  font-weight: 501;
+}
+
+.PDF .pdfBlock {
+  margin: 10px;
+  color: steelblue;
+}
+
+.PDF .pdfBlock:hover {
+  margin: 10px;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.PDF .pdfBlock:active {
+  color: rgb(10, 46, 163);
+}
+
+.PDF .File {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.PDF .File .IconClose {
+  cursor: pointer;
+}
+
+@media (min-width: 1025px) {
+  /* breite Browserfenster */
+  .PDF .File .IconClose {
+    display: none;
+  }
+  .PDF .title {
+    font-size: 25px;
+  }
+}
+@media (max-width: 1024px) {
+  /* mobile Geräte */
+  .PDF .File .IconClose {
+    display: block;
+  }
+  .PDF .title {
+    font-size: 20px;
+  }
+}
+
+.PDF .File:hover .IconClose {
+  display: block;
+}
+
+.PDF .pdf-upload > input {
+  display: none;
+}
+
+.PDF .pdf-upload > label > .IconAdd {
+  cursor: pointer;
+}
