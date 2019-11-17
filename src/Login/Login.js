@@ -1,7 +1,6 @@
 import React from "react";
 import "./Login.css";
 import PropTypes from "prop-types";
-
 import IconClose from "../static/IconClose";
 
 /**
