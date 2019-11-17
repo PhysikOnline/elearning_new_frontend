@@ -1,5 +1,7 @@
 import React from "react";
 import Loading from "../Additional/Loading";
+
+import { Link } from "react-router-dom";
 // import { Switch, Route, useRouteMatch } from "react-router-dom";
 
 import "./AllCourses.css";
@@ -30,8 +32,21 @@ class AllCourses extends React.Component {
   }
 
   // returning list of the names of the courses from array
-  listCourses(hello) {
-    return hello.map(coursearray => <div>{coursearray}</div>);
+  listCourses(hello, semester) {
+    return hello.map(coursearray => (
+      <ul>
+        <Link
+          to={
+            "/course/" +
+            encodeURIComponent(semester) +
+            "/" +
+            encodeURIComponent(coursearray)
+          }
+        >
+          {coursearray}
+        </Link>
+      </ul>
+    ));
   }
 
   // returning list of coursenames of each semester
@@ -39,7 +54,9 @@ class AllCourses extends React.Component {
     return this.state.allCourses.map(coursearray => (
       <div className="AllCourses">
         <div className="courseSemester">{coursearray.Semester}</div>
-        <div className="courseName">{this.listCourses(coursearray.Name)}</div>
+        <div className="courseName">
+          {this.listCourses(coursearray.Name, coursearray.Semester)}
+        </div>
       </div>
     ));
   }
@@ -52,7 +69,7 @@ class AllCourses extends React.Component {
       <div>
         <React.Fragment>
           <h1>Kursübersicht</h1>
-          <div> {this.listSemester()}</div>
+          <div>{this.listSemester()}</div>
         </React.Fragment>
       </div>
     );
