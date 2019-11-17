@@ -35,7 +35,7 @@ class Overview extends React.Component {
    */
   handleSubmit() {
     fetch(
-      "/course/insertdescription?Semester=" +
+      "/api/course/insertdescription?Semester=" +
         this.props.courseSemester +
         "&Name=" +
         this.props.courseName +

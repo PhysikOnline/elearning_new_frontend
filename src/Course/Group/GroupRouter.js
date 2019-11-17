@@ -53,7 +53,7 @@ class GroupRouter extends React.Component {
    */
   getGroups() {
     fetch(
-      "/course/group/groupcontent?Semester=" +
+      "/api/course/group/groupcontent?Semester=" +
         this.props.courseSemester +
         "&Name=" +
         this.props.courseName,
@@ -73,7 +73,7 @@ class GroupRouter extends React.Component {
         });
       });
     fetch(
-      "/course/group/assignedgroup?Semester=" +
+      "/api/course/group/assignedgroup?Semester=" +
         this.props.courseSemester +
         "&CourseName=" +
         this.props.courseName,
@@ -116,7 +116,7 @@ class GroupRouter extends React.Component {
   handleLeave(event) {
     this.setState({ isLoadingGroupChange: true });
     fetch(
-      "/course/group/leavegroup?Semester=" +
+      "/api/course/group/leavegroup?Semester=" +
         this.props.courseSemester +
         "&CourseName=" +
         this.props.courseName +
@@ -139,7 +139,7 @@ class GroupRouter extends React.Component {
   handleJoin(event) {
     this.setState({ isLoadingGroupChange: true });
     fetch(
-      "/course/group/joingroup?Semester=" +
+      "/api/course/group/joingroup?Semester=" +
         this.props.courseSemester +
         "&CourseName=" +
         this.props.courseName +

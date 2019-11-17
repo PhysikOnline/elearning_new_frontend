@@ -30,11 +30,48 @@ class Group extends React.Component {
     this.TimeInJavaScriptDate = this.TimeInJavaScriptDate.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
+    this.handleCSVdownload = this.handleCSVdownload.bind(this);
+  }
+  handleCSVdownload() {
+    fetch(
+      "/api/course/group/groupcsv?Semester=" +
+        this.props.courseSemester +
+        "&CourseName=" +
+        this.props.courseName +
+        "&GroupName=" +
+        this.props.Group.GroupName,
+      {
+        method: "GET"
+      }
+    )
+      .then(res => res.blob())
+      .then(response => {
+        //Create a Blob from the PDF Stream
+        const file = new Blob([response], {
+          // type: "application/pdf"
+        });
+        //Build a URL from the file
+        let fileURL = URL.createObjectURL(file);
+
+        // create <a> tag dinamically
+        var fileLink = document.createElement("a");
+        fileLink.href = fileURL;
+
+        // it forces the name of the downloaded file
+        fileLink.target = "_blank";
+        fileLink.download = this.props.Group.GroupName + ".csv";
+
+        // triggers the click event
+        fileLink.click();
+      })
+      .catch(error => {
+        console.log(error);
+      });
   }
   handleDelete(event) {
     if (window.confirm("Soll die Gruppe wirklich geloescht werden?")) {
       fetch(
-        "/course/group/deletegroup?Semester=" +
+        "/api/course/group/deletegroup?Semester=" +
           this.props.courseSemester +
           "&CourseName=" +
           this.props.courseName +
@@ -110,8 +147,6 @@ class Group extends React.Component {
       if (
         JSON.stringify(this.props.Group) !== JSON.stringify(previousProps.Group)
       ) {
-        console.log("cr", JSON.stringify(this.props.Group));
-        console.log("pv", JSON.stringify(previousProps.Group));
         this.setState({
           newGroup: this.props.Group
         });
@@ -121,7 +156,7 @@ class Group extends React.Component {
   handleSubmit() {
     if (!this.state.validity.GroupName && !this.state.validity.Tutor) {
       fetch(
-        "/course/group/insertorupdategroup?Semester=" +
+        "/api/course/group/insertorupdategroup?Semester=" +
           this.props.courseSemester +
           "&CourseName=" +
           this.props.courseName +
@@ -300,6 +335,15 @@ class Group extends React.Component {
           </label>
           {!isUser ? (
             <input type="button" value="Löschen" onClick={this.handleDelete} />
+          ) : (
+            undefined
+          )}
+          {this.props.auth.includes("tutor") ? (
+            <input
+              type="button"
+              onClick={this.handleCSVdownload}
+              value="Nutzer CSV"
+            />
           ) : (
             undefined
           )}
